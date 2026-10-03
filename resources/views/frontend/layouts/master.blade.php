@@ -265,9 +265,6 @@
       @toggle-cart.window="cartOpen = ($event.detail && $event.detail.open !== undefined && $event.detail.open !== null) ? $event.detail.open : !cartOpen"
       @keydown.escape="cartOpen = false; quickViewOpen = false; mobileMenuOpen = false; searchOpen = false">
 
-    <!-- Top Announcement Bar -->
-    @include('frontend.partials.topbar')
-
     <!-- Main Navigation Header -->
     @include('frontend.partials.header')
 
