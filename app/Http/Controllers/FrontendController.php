@@ -1382,6 +1382,7 @@ class FrontendController extends Controller
                                 'size_old_prices' => !empty($sizeOldPrices) ? $sizeOldPrices : null,
                                 'variation_prices' => !empty($variationPrices) ? $variationPrices : null,
                                 'variation_old_prices' => !empty($variationOldPrices) ? $variationOldPrices : null,
+                                'description' => $p->description ?? '',
                             ];
                         }
                         return $items;

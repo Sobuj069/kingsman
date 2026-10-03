@@ -922,16 +922,17 @@
         $(document).ready(function() {
             if ($.fn.summernote) {
                 $('#description').summernote({
-                    placeholder: '{{ __("Enter Description...") }}',
+                    placeholder: '{{ __("Enter or Paste Description...") }}',
                     tabsize: 2,
-                    height: 150,
+                    height: 200,
                     toolbar: [
                         ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
+                        ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                        ['fontsize', ['fontsize']],
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['table', ['table']],
-                        ['insert', ['link', 'picture']],
+                        ['insert', ['link', 'picture', 'hr']],
                         ['view', ['fullscreen', 'codeview']]
                     ]
                 });

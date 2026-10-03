@@ -68,7 +68,7 @@
                         </div>
 
                         <!-- Brief Description -->
-                        <p class="mt-3 text-xs text-gray-600 leading-relaxed" x-text="quickProduct.description"></p>
+                        <div class="mt-3 text-xs leading-relaxed product-description-content" x-html="quickProduct.description"></div>
 
                         <hr class="my-4 border-gray-200">
 

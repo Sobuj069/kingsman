@@ -20,6 +20,95 @@
     .cursor-crosshair-zoom {
         cursor: zoom-in;
     }
+
+    /* Product Description Rich HTML Formatting (Same as Admin Pasted) */
+    .product-description-content {
+        color: #1e293b;
+        font-size: 13px;
+        line-height: 1.7;
+        word-break: break-word;
+    }
+    .product-description-content p {
+        margin-bottom: 0.65rem;
+    }
+    .product-description-content p:last-child {
+        margin-bottom: 0;
+    }
+    .product-description-content ul {
+        list-style-type: disc !important;
+        padding-left: 1.35rem !important;
+        margin: 0.5rem 0 0.75rem 0 !important;
+    }
+    .product-description-content ol {
+        list-style-type: decimal !important;
+        padding-left: 1.35rem !important;
+        margin: 0.5rem 0 0.75rem 0 !important;
+    }
+    .product-description-content li {
+        margin-bottom: 0.35rem !important;
+        list-style: inherit !important;
+    }
+    .product-description-content strong,
+    .product-description-content b {
+        font-weight: 700 !important;
+        color: #0f172a;
+    }
+    .product-description-content em,
+    .product-description-content i {
+        font-style: italic !important;
+    }
+    .product-description-content u {
+        text-decoration: underline !important;
+    }
+    .product-description-content h1,
+    .product-description-content h2,
+    .product-description-content h3,
+    .product-description-content h4,
+    .product-description-content h5,
+    .product-description-content h6 {
+        font-weight: 700 !important;
+        color: #0f172a;
+        margin-top: 0.75rem;
+        margin-bottom: 0.4rem;
+        line-height: 1.3;
+    }
+    .product-description-content h1 { font-size: 1.3rem; }
+    .product-description-content h2 { font-size: 1.18rem; }
+    .product-description-content h3 { font-size: 1.08rem; }
+    .product-description-content h4 { font-size: 0.98rem; }
+    .product-description-content table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        margin: 0.75rem 0 !important;
+        border: 1px solid #cbd5e1 !important;
+    }
+    .product-description-content th,
+    .product-description-content td {
+        border: 1px solid #cbd5e1 !important;
+        padding: 6px 10px !important;
+        text-align: left;
+    }
+    .product-description-content th {
+        background-color: #f1f5f9 !important;
+        font-weight: 600 !important;
+    }
+    .product-description-content img {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 6px;
+        margin: 0.5rem 0;
+    }
+    .product-description-content blockquote {
+        border-left: 3px solid #C5A880;
+        padding-left: 0.75rem;
+        font-style: italic;
+        color: #64748b;
+        margin: 0.75rem 0;
+    }
+    .product-description-content a {
+        color: #2563eb;
+        text-decoration: underline;
+    }
 </style>
 @endpush
 
@@ -441,11 +530,21 @@
                             <span>Product Details & Specifications</span>
                             <span class="material-symbols-outlined text-base transition-transform duration-300" :class="accordion1 ? 'rotate-180' : ''">expand_more</span>
                         </button>
-                        <div x-show="accordion1" x-collapse class="pt-3 text-xs text-gray-700 leading-relaxed border-t border-gray-200/60 mt-3">
+                        <div x-show="accordion1" x-collapse class="pt-3 leading-relaxed border-t border-gray-200/60 mt-3">
                             @if(!empty($product['description']))
-                                <div class="whitespace-pre-line leading-relaxed">{!! nl2br(e($product['description'])) !!}</div>
+                                @php
+                                    $rawDesc = $product['description'];
+                                    $hasHtml = strip_tags($rawDesc) !== $rawDesc || preg_match('/<[a-z][\s\S]*>/i', $rawDesc);
+                                @endphp
+                                <div class="product-description-content">
+                                    @if($hasHtml)
+                                        {!! $rawDesc !!}
+                                    @else
+                                        {!! nl2br(e($rawDesc)) !!}
+                                    @endif
+                                </div>
                             @else
-                                <p class="text-gray-500 italic">Authentic {{ $product['name'] }} crafted with premium fabrics and superior finishing.</p>
+                                <p class="text-xs text-gray-500 italic">Authentic {{ $product['name'] }} crafted with premium fabrics and superior finishing.</p>
                             @endif
                         </div>
                     </div>
