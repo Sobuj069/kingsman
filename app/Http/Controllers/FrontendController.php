@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewOrderNotification;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariation;
@@ -824,6 +826,27 @@ class FrontendController extends Controller
                 'created_at' => now()->format('d M Y, h:i A')
             ];
             session(['latest_order' => $orderData]);
+
+            // 6. Dispatch Email Notification to Admin (kingsmenbd999@gmail.com)
+            $notificationEmail = env('ORDER_NOTIFICATION_EMAIL', 'kingsmenbd999@gmail.com');
+            if (!empty($notificationEmail)) {
+                try {
+                    Mail::to($notificationEmail)->send(new NewOrderNotification($orderData, $savedItemsForSession));
+                } catch (\Throwable $mailEx) {
+                    Log::warning('Order notification Mail dispatch issue: ' . $mailEx->getMessage(), [
+                        'order_id' => $invoiceNo
+                    ]);
+                    // Direct sendmail/mail fallback
+                    try {
+                        $subject = "🚨 New Web Order #{$invoiceNo} from {$customer->name} (৳" . number_format($grandTotal) . ") - Kingsman";
+                        $htmlBody = view('emails.new-order-notification', ['order' => $orderData, 'items' => $savedItemsForSession])->render();
+                        $headers = "MIME-Version: 1.0\r\n";
+                        $headers .= "Content-type:text/html;charset=UTF-8\r\n";
+                        $headers .= "From: Kingsman Official <noreply@kingsmen.com.bd>\r\n";
+                        @mail($notificationEmail, $subject, $htmlBody, $headers);
+                    } catch (\Throwable $fbEx) {}
+                }
+            }
 
             return redirect()->route('order.confirmation', ['order_id' => $invoiceNo])
                 ->with('success', "Your bespoke luxury consignment #{$invoiceNo} has been placed successfully!");
