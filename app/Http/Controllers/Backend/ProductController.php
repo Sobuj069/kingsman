@@ -254,6 +254,20 @@ class ProductController extends Controller
             $product->warranty_value = null;
             $product->warranty_unit = null;
         }
+
+        // Size Guide configuration
+        $product->has_size_guide = $request->has('has_size_guide') ? 1 : 0;
+        $product->size_guide_type = $request->size_guide_type ?? 'panjabi';
+        $product->size_guide_content = $request->size_guide_content ?? null;
+        if ($request->hasFile('size_guide_image')) {
+            $sgFile = $request->file('size_guide_image');
+            if ($sgFile->isValid()) {
+                $sgName = date('YmdHi') . '_sg_' . $sgFile->getClientOriginalName();
+                $sgFile->move(public_path('uploads/products/'), $sgName);
+                $product->size_guide_image = $sgName;
+            }
+        }
+
         $product->created_by = Auth::user()->id;
 
         $colorImageMap = [];
@@ -612,6 +626,28 @@ class ProductController extends Controller
             $product->has_warranty = 0;
             $product->warranty_value = null;
             $product->warranty_unit = null;
+        }
+
+        // Size Guide configuration
+        $product->has_size_guide = $request->has('has_size_guide') ? 1 : 0;
+        $product->size_guide_type = $request->size_guide_type ?? 'panjabi';
+        $product->size_guide_content = $request->size_guide_content ?? null;
+        if ($request->hasFile('size_guide_image')) {
+            $oldSgImage = $product->size_guide_image;
+            $sgFile = $request->file('size_guide_image');
+            if ($sgFile->isValid()) {
+                $sgName = date('YmdHi') . '_sg_' . $sgFile->getClientOriginalName();
+                $sgFile->move(public_path('uploads/products/'), $sgName);
+                if (!empty($oldSgImage) && file_exists(public_path('uploads/products/' . $oldSgImage))) {
+                    @unlink(public_path('uploads/products/' . $oldSgImage));
+                }
+                $product->size_guide_image = $sgName;
+            }
+        } elseif ($request->has('remove_size_guide_image') && $request->remove_size_guide_image == '1') {
+            if (!empty($product->size_guide_image) && file_exists(public_path('uploads/products/' . $product->size_guide_image))) {
+                @unlink(public_path('uploads/products/' . $product->size_guide_image));
+            }
+            $product->size_guide_image = null;
         }
 
         if ($product->save()) {

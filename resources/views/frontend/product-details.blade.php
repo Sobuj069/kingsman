@@ -222,12 +222,14 @@
                                 <span class="bg-black text-white px-2 py-0.5 text-[10px] font-bold rounded" x-text="totalSelectedQty + ' items selected'"></span>
                             </template>
                         </div>
+                        @if(!empty($product['has_size_guide']))
                         <button type="button" 
                                 @click="sizeModalOpen = true"
                                 class="flex items-center gap-1 text-black hover:text-red-600 transition-colors underline font-semibold uppercase tracking-wider text-[11px]">
                             <span class="material-symbols-outlined text-sm">straighten</span>
                             <span>Size Guide</span>
                         </button>
+                        @endif
                     </div>
 
                     <!-- Multi-Variant Sizing Cards with Individual Quantity Counters -->
@@ -594,6 +596,7 @@
     @endif
 
     <!-- 6. INTERACTIVE MEASUREMENT & SIZE GUIDE MODAL -->
+    @if(!empty($product['has_size_guide']))
     <div x-show="sizeModalOpen" 
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
@@ -610,8 +613,20 @@
             
             <div class="p-5 bg-[#0B0B0C] text-white flex items-center justify-between">
                 <div class="flex flex-col">
-                    <span class="text-[11px] uppercase tracking-widest text-[#C5A880] font-bold">Atelier Standard</span>
-                    <h3 class="font-outfit text-lg md:text-xl font-bold text-white">Panjabi Size & Metric Matrix</h3>
+                    <span class="text-[11px] uppercase tracking-widest text-[#C5A880] font-bold">Size Guide & Sizing Matrix</span>
+                    <h3 class="font-outfit text-lg md:text-xl font-bold text-white">
+                        @if(($product['size_guide_type'] ?? '') === 'shirt')
+                            Shirt Size & Measurement Matrix
+                        @elseif(($product['size_guide_type'] ?? '') === 'tshirt')
+                            T-Shirt / Polo Size Matrix
+                        @elseif(($product['size_guide_type'] ?? '') === 'pants')
+                            Pants / Trouser Size Matrix
+                        @elseif(($product['size_guide_type'] ?? '') === 'custom_image')
+                            Custom Size Chart
+                        @else
+                            Panjabi Size & Metric Matrix
+                        @endif
+                    </h3>
                 </div>
                 <button type="button" 
                         @click="sizeModalOpen = false"
@@ -621,77 +636,131 @@
             </div>
 
             <div class="p-6 flex flex-col gap-4 overflow-y-auto custom-scrollbar">
-                <p class="text-xs text-gray-600 leading-relaxed">
-                    All measurements are provided in inches. For a tailored slim silhouette, select your exact chest dimension. For festive layering or comfort fit, size up one unit.
-                </p>
+                @if(!empty($product['size_guide_content']))
+                    <p class="text-xs text-gray-700 leading-relaxed bg-amber-50/70 p-3 border border-amber-200/80 rounded">
+                        {{ $product['size_guide_content'] }}
+                    </p>
+                @endif
 
-                <div class="overflow-x-auto border border-gray-200">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-[#F5F5F7] uppercase text-black font-bold border-b border-gray-200">
-                            <tr>
-                                <th class="p-3">Size</th>
-                                <th class="p-3">Chest</th>
-                                <th class="p-3">Length</th>
-                                <th class="p-3">Shoulder</th>
-                                <th class="p-3">Sleeve</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-3 font-bold text-black">38 (S)</td>
-                                <td class="p-3">39.0"</td>
-                                <td class="p-3">40.0"</td>
-                                <td class="p-3">17.0"</td>
-                                <td class="p-3">24.5"</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-3 font-bold text-black">40 (M)</td>
-                                <td class="p-3">41.0"</td>
-                                <td class="p-3">41.5"</td>
-                                <td class="p-3">17.5"</td>
-                                <td class="p-3">25.0"</td>
-                            </tr>
-                            <tr class="bg-[#EFE6DB]/50 font-semibold">
-                                <td class="p-3 text-[#725b38] font-bold">42 (L) • Selected Default</td>
-                                <td class="p-3">43.0"</td>
-                                <td class="p-3">43.0"</td>
-                                <td class="p-3">18.25"</td>
-                                <td class="p-3">25.5"</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-3 font-bold text-black">44 (XL)</td>
-                                <td class="p-3">45.0"</td>
-                                <td class="p-3">44.0"</td>
-                                <td class="p-3">19.0"</td>
-                                <td class="p-3">26.0"</td>
-                            </tr>
-                            <tr class="hover:bg-gray-50">
-                                <td class="p-3 font-bold text-black">46 (XXL)</td>
-                                <td class="p-3">47.5"</td>
-                                <td class="p-3">45.0"</td>
-                                <td class="p-3">19.75"</td>
-                                <td class="p-3">26.5"</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                @if(!empty($product['size_guide_image']))
+                    <div class="w-full flex justify-center p-2 bg-gray-50 border border-gray-200 rounded">
+                        <img src="{{ $product['size_guide_image'] }}" alt="Size Guide" class="max-w-full max-h-[420px] object-contain">
+                    </div>
+                @endif
+
+                @if(($product['size_guide_type'] ?? 'panjabi') === 'panjabi')
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        All measurements are provided in inches. For a tailored slim silhouette, select your exact chest dimension. For festive layering or comfort fit, size up one unit.
+                    </p>
+                    <div class="overflow-x-auto border border-gray-200">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-[#F5F5F7] uppercase text-black font-bold border-b border-gray-200">
+                                <tr>
+                                    <th class="p-3">Size</th>
+                                    <th class="p-3">Chest</th>
+                                    <th class="p-3">Length</th>
+                                    <th class="p-3">Shoulder</th>
+                                    <th class="p-3">Sleeve</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">38 (S)</td><td class="p-3">39.0"</td><td class="p-3">40.0"</td><td class="p-3">17.0"</td><td class="p-3">24.5"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">40 (M)</td><td class="p-3">41.0"</td><td class="p-3">41.5"</td><td class="p-3">17.5"</td><td class="p-3">25.0"</td></tr>
+                                <tr class="bg-[#EFE6DB]/50 font-semibold"><td class="p-3 text-[#725b38] font-bold">42 (L)</td><td class="p-3">43.0"</td><td class="p-3">43.0"</td><td class="p-3">18.25"</td><td class="p-3">25.5"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">44 (XL)</td><td class="p-3">45.0"</td><td class="p-3">44.0"</td><td class="p-3">19.0"</td><td class="p-3">26.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">46 (XXL)</td><td class="p-3">47.5"</td><td class="p-3">45.0"</td><td class="p-3">19.75"</td><td class="p-3">26.5"</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                @elseif(($product['size_guide_type'] ?? '') === 'shirt')
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        All measurements are in inches. Regular fit shirts designed for supreme comfort and sharp contours.
+                    </p>
+                    <div class="overflow-x-auto border border-gray-200">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-[#F5F5F7] uppercase text-black font-bold border-b border-gray-200">
+                                <tr>
+                                    <th class="p-3">Size</th>
+                                    <th class="p-3">Chest</th>
+                                    <th class="p-3">Length</th>
+                                    <th class="p-3">Collar</th>
+                                    <th class="p-3">Sleeve</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">S (38)</td><td class="p-3">38.0"</td><td class="p-3">28.5"</td><td class="p-3">14.5"</td><td class="p-3">24.5"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">M (40)</td><td class="p-3">40.0"</td><td class="p-3">29.5"</td><td class="p-3">15.5"</td><td class="p-3">25.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">L (42)</td><td class="p-3">42.0"</td><td class="p-3">30.5"</td><td class="p-3">16.5"</td><td class="p-3">25.5"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">XL (44)</td><td class="p-3">44.0"</td><td class="p-3">31.5"</td><td class="p-3">17.5"</td><td class="p-3">26.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">XXL (46)</td><td class="p-3">46.0"</td><td class="p-3">32.0"</td><td class="p-3">18.0"</td><td class="p-3">26.5"</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                @elseif(($product['size_guide_type'] ?? '') === 'tshirt')
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        All measurements are in inches. Premium combed cotton fit.
+                    </p>
+                    <div class="overflow-x-auto border border-gray-200">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-[#F5F5F7] uppercase text-black font-bold border-b border-gray-200">
+                                <tr>
+                                    <th class="p-3">Size</th>
+                                    <th class="p-3">Chest</th>
+                                    <th class="p-3">Length</th>
+                                    <th class="p-3">Shoulder</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">M</td><td class="p-3">38.0"</td><td class="p-3">27.5"</td><td class="p-3">17.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">L</td><td class="p-3">40.0"</td><td class="p-3">28.5"</td><td class="p-3">18.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">XL</td><td class="p-3">42.0"</td><td class="p-3">29.5"</td><td class="p-3">19.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">XXL</td><td class="p-3">44.0"</td><td class="p-3">30.5"</td><td class="p-3">20.0"</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                @elseif(($product['size_guide_type'] ?? '') === 'pants')
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        All measurements are in inches. Tailored waistband and contemporary taper.
+                    </p>
+                    <div class="overflow-x-auto border border-gray-200">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-[#F5F5F7] uppercase text-black font-bold border-b border-gray-200">
+                                <tr>
+                                    <th class="p-3">Size</th>
+                                    <th class="p-3">Waist</th>
+                                    <th class="p-3">Length</th>
+                                    <th class="p-3">Thigh</th>
+                                    <th class="p-3">Hip</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">30</td><td class="p-3">30.0"</td><td class="p-3">39.0"</td><td class="p-3">23.0"</td><td class="p-3">38.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">32</td><td class="p-3">32.0"</td><td class="p-3">40.0"</td><td class="p-3">24.0"</td><td class="p-3">40.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">34</td><td class="p-3">34.0"</td><td class="p-3">41.0"</td><td class="p-3">25.0"</td><td class="p-3">42.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">36</td><td class="p-3">36.0"</td><td class="p-3">41.5"</td><td class="p-3">26.0"</td><td class="p-3">44.0"</td></tr>
+                                <tr class="hover:bg-gray-50"><td class="p-3 font-bold text-black">38</td><td class="p-3">38.0"</td><td class="p-3">42.0"</td><td class="p-3">27.0"</td><td class="p-3">46.0"</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
 
                 <div class="p-4 bg-[#F5F5F7] flex items-start gap-3 border border-gray-200/80">
                     <span class="material-symbols-outlined text-[#C5A880] text-lg mt-0.5">help_outline</span>
                     <div class="flex flex-col text-xs text-gray-700">
-                        <span class="font-bold text-black">Need a Custom Made-to-Measure Cut?</span>
-                        <span class="text-gray-500 mt-0.5">Our Master Tailor can accommodate non-standard collar widths, longer hem drops, or athletic tapering. Mention your requirement in the checkout note or text our WhatsApp concierge.</span>
+                        <span class="font-bold text-black">Need a Custom Fit or Sizing Help?</span>
+                        <span class="text-gray-500 mt-0.5">Mention your measurements in checkout notes or reach out to our concierge team on WhatsApp for personalized assistance.</span>
                     </div>
                 </div>
 
                 <button type="button" 
                         @click="sizeModalOpen = false"
                         class="w-full py-3 bg-[#0B0B0C] text-white text-xs font-bold uppercase tracking-widest hover:bg-black transition-colors">
-                    Return To Garment Selection
+                    Close Size Guide
                 </button>
             </div>
         </div>
     </div>
+    @endif
 
     <!-- 7. ZOOM MODAL -->
     <div x-show="zoomModalOpen" 

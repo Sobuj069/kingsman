@@ -451,6 +451,10 @@ class FrontendController extends Controller
                         'variation_old_prices' => !empty($variationOldPrices) ? $variationOldPrices : null,
                         'default_size' => $sizes[0] ?? null,
                         'description' => $dbProduct->description ?? '',
+                        'has_size_guide' => (bool)($dbProduct->has_size_guide == 1 || !empty($dbProduct->size_guide_image)),
+                        'size_guide_type' => $dbProduct->size_guide_type ?? 'panjabi',
+                        'size_guide_image' => $dbProduct->size_guide_image_url,
+                        'size_guide_content' => $dbProduct->size_guide_content,
                     ];
                 }
             }

@@ -368,6 +368,55 @@
                                             </label>
                                         </div>
                                     </div>
+                            {{-- Size Guide Settings --}}
+                            <div class="col-md-12 mt-3 mb-2">
+                                <div class="card p-3 shadow-sm" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 10px; border: 1px solid #cbd5e1;">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <h6 class="fw-bold mb-0 text-dark">
+                                            <i class="feather icon-help-circle text-primary mr-1"></i> {{ __('Size Guide Settings (সাইজ গাইড অপশন)') }}
+                                        </h6>
+                                        <span class="badge badge-primary px-2 py-1 text-xs">{{ __('Storefront Sizing') }}</span>
+                                    </div>
+                                    <p class="text-muted small mb-3">
+                                        {{ __('Enable Size Guide button on this product details page. Only products with Size Guide enabled will display the "SIZE GUIDE" modal button.') }}
+                                    </p>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="has_size_guide" name="has_size_guide" value="1" {{ old('has_size_guide') ? 'checked' : '' }} onchange="toggleSizeGuideSettings()">
+                                                <label class="custom-control-label fw-bold text-dark" for="has_size_guide" style="cursor: pointer;">
+                                                    {{ __('Enable Size Guide for this Product (এই প্রোডাক্টে সাইজ গাইড চালু করুন)') }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="size_guide_options" style="{{ old('has_size_guide') ? 'display: block;' : 'display: none;' }}">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-bold">{{ __('Size Guide Type / Preset') }}</label>
+                                                <select name="size_guide_type" id="size_guide_type" class="form-control select2">
+                                                    <option value="panjabi" {{ old('size_guide_type', 'panjabi') == 'panjabi' ? 'selected' : '' }}>{{ __('Panjabi Standard Chart (পাঞ্জাবি)') }}</option>
+                                                    <option value="shirt" {{ old('size_guide_type') == 'shirt' ? 'selected' : '' }}>{{ __('Shirt Standard Chart (শার্ট)') }}</option>
+                                                    <option value="tshirt" {{ old('size_guide_type') == 'tshirt' ? 'selected' : '' }}>{{ __('T-Shirt / Polo Chart (টি-শার্ট)') }}</option>
+                                                    <option value="pants" {{ old('size_guide_type') == 'pants' ? 'selected' : '' }}>{{ __('Pants / Trouser Chart (প্যান্ট)') }}</option>
+                                                    <option value="custom_image" {{ old('size_guide_type') == 'custom_image' ? 'selected' : '' }}>{{ __('Custom Size Chart Image Only (কাস্টম ছবি)') }}</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-bold">{{ __('Upload Size Chart Image (Optional / Custom)') }}</label>
+                                                <input type="file" name="size_guide_image" id="size_guide_image" class="form-control" accept="image/*">
+                                                <small class="text-muted">{{ __('Upload a custom size chart image for this product if needed.') }}</small>
+                                            </div>
+
+                                            <div class="col-md-12 mb-2">
+                                                <label class="form-label fw-bold">{{ __('Custom Note / Sizing Instructions (Optional)') }}</label>
+                                                <textarea name="size_guide_content" class="form-control" rows="2" placeholder="{{ __('e.g. Measurements are in inches. For a regular fit, order your usual size.') }}">{{ old('size_guide_content') }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1227,6 +1276,11 @@
                 };
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+
+        function toggleSizeGuideSettings() {
+            var isChecked = document.getElementById('has_size_guide').checked;
+            document.getElementById('size_guide_options').style.display = isChecked ? 'block' : 'none';
         }
     </script>
 @endpush

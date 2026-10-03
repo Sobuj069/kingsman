@@ -17,6 +17,7 @@ class Product extends Model
         'is_featured' => 'boolean',
         'is_service' => 'integer',
         'has_warranty' => 'integer',
+        'has_size_guide' => 'integer',
         'status' => 'integer',
     ];
 
@@ -105,6 +106,30 @@ class Product extends Model
         }
 
         return asset('frontend/images/no-image.svg');
+    }
+
+    /**
+     * Get the full URL for the size guide image if present.
+     */
+    public function getSizeGuideImageUrlAttribute(): ?string
+    {
+        if (empty($this->size_guide_image)) {
+            return null;
+        }
+
+        if (filter_var($this->size_guide_image, FILTER_VALIDATE_URL)) {
+            return $this->size_guide_image;
+        }
+
+        if (file_exists(public_path('uploads/products/' . $this->size_guide_image))) {
+            return asset('uploads/products/' . $this->size_guide_image);
+        }
+
+        if (file_exists(public_path('uploads/size_guides/' . $this->size_guide_image))) {
+            return asset('uploads/size_guides/' . $this->size_guide_image);
+        }
+
+        return asset('uploads/products/' . $this->size_guide_image);
     }
 
     public function product_variations()

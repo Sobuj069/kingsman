@@ -69,45 +69,6 @@
                         </li>
                     @endif
                 </ul>
-
-                <hr class="border-neutral-800 my-4">
-
-                <p class="text-[11px] font-bold text-neutral-400 uppercase tracking-widest">Customer Care &amp; Info</p>
-                <ul class="space-y-1 text-xs text-neutral-300">
-                    <li>
-                        <a href="{{ route('frontend.about') }}" @click="mobileMenuOpen = false" class="flex items-center gap-2 py-2 px-3 hover:text-white">
-                            <i class="fa-solid fa-circle-info text-red-500"></i> About Us
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('frontend.contact') }}" @click="mobileMenuOpen = false" class="flex items-center gap-2 py-2 px-3 hover:text-white">
-                            <i class="fa-solid fa-headset text-red-500"></i> Contact &amp; Showrooms
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('frontend.return-policy') }}" @click="mobileMenuOpen = false" class="flex items-center gap-2 py-2 px-3 hover:text-white">
-                            <i class="fa-solid fa-arrow-rotate-left text-red-500"></i> Return &amp; Exchange Policy
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', function_exists('get_hotline_phone') ? get_hotline_phone() : ($hotline ?? '01987258406')) }}" class="flex items-center gap-2 py-2 px-3 hover:text-white">
-                            <i class="fa-solid fa-phone text-red-500"></i> Hotline: {{ function_exists('get_hotline_phone') ? get_hotline_phone() : ($hotline ?? '01987258406') }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('frontend.wishlist') }}" @click="mobileMenuOpen = false" class="flex items-center justify-between py-2 px-3 hover:text-white">
-                            <span class="flex items-center gap-2">
-                                <i class="fa-regular fa-heart text-red-500"></i> My Wishlist
-                            </span>
-                            <span class="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full" x-text="$store.wishlist.count">0</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('login') }}" class="flex items-center gap-2 py-2 px-3 hover:text-white">
-                            <i class="fa-regular fa-user text-red-500"></i> Sign In / Register
-                        </a>
-                    </li>
-                </ul>
             </div>
 
             <!-- Drawer Footer -->
