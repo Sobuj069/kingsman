@@ -1,0 +1,8 @@
+@props(['label' => '', 'name' => '','multiple' => false, 'required' => false, 'md' => 12])
+<div class="mb-3 form-group col-md-{{$md}}">
+    <label class="mb-2">{{ $label }}</label>
+    <select name="{{$name}}" {{ $multiple ? 'multiple' : '' }}  {{ $required ? 'required' : '' }} class="select2">
+        {{ $slot }}
+    </select>
+    <span id="{{ $name }}" class="text-danger d-none"></span>
+</div>

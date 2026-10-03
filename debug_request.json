@@ -1,0 +1,40 @@
+{
+    "_token": "tV6P31sDfI3D3jpbsOqWFWQ025Ye5QtcQ0xuBK1D",
+    "branch_id": "1",
+    "redirect_query": null,
+    "date": "2026-08-12",
+    "purchase_no": "PUR00003",
+    "note": null,
+    "supplier_id": "1",
+    "id": "3",
+    "itemID": [
+        "3"
+    ],
+    "product_id": [
+        "2"
+    ],
+    "product_variation_id": [
+        null
+    ],
+    "new_rate": [
+        "100.00"
+    ],
+    "new_main_qty": [
+        "12.00"
+    ],
+    "new_sub_qty": [
+        "0.00"
+    ],
+    "new_subtotal_input": [
+        "1200.00"
+    ],
+    "estimated_amount": "1200.00",
+    "discount_percent": "0",
+    "discount_amount": "0",
+    "vat_percent": "0",
+    "vat_amount": "0",
+    "total_amount": "1200.00",
+    "bank_id": "1",
+    "paid_amount": "1200.00",
+    "due_amount": "0.00"
+}

@@ -1,0 +1,88 @@
+body { 
+    background: #f1f5f9; 
+    margin: 0; 
+}
+
+#containerbar { 
+    display: flex; 
+}
+
+.rightbar { 
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    margin-left: 260px;
+    transition: margin-left 0.3s ease; 
+    overflow-x: hidden; 
+    width: calc(100% - 260px);
+}
+
+.rightbar.mini { 
+    margin-left: 80px; 
+    width: calc(100% - 80px); 
+}
+
+/* Mobile Responsive Sidebar */
+@media (max-width: 768px) {
+    .modern-sidebar {
+        transform: translateX(-100%);
+        z-index: 1200 !important;
+        box-shadow: none;
+    }
+    .modern-sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 8px 0 32px rgba(0, 0, 0, 0.4);
+    }
+    .rightbar {
+        margin-left: 0 !important;
+        padding-bottom: 40px !important;
+    }
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.55);
+        z-index: 1199;
+    }
+    .sidebar-overlay.active {
+        display: block;
+    }
+}
+
+/* Layout alignment fixes */
+.contentbar {
+    padding: 0 25px 5px 25px; 
+    width: 100%;
+    flex: 1 0 auto;
+}
+
+/* Specific gap for pages without breadcrumb (like dashboard) */
+.dashboard-page .contentbar {
+    padding-top: 25px !important;
+}
+
+@media (max-width: 768px) {
+    .contentbar {
+        padding: 20px 15px 20px 15px;
+    }
+}
+
+/* Dark Mode Layout */
+body.dark-theme .rightbar, 
+body.dark-theme .contentbar {
+    background-color: #0f172a !important;
+    border-color: #1e293b !important;
+}
+
+/* Sidebar None Override */
+.sidebar-none .modern-sidebar { display: none !important; }
+.sidebar-none .rightbar { width: 100% !important; margin-left: 0 !important; }
+.footerbar {
+    position: relative !important;
+    left: 0 !important;
+    width: 100% !important;
+    margin-top: auto;
+    padding: 10px 0 !important;
+}
+

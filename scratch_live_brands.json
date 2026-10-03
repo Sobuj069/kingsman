@@ -1,0 +1,954 @@
+[
+    {
+        "id": 1,
+        "branch_id": 2,
+        "name": "MRT",
+        "slug": "mrt",
+        "created_at": "2023-12-02T14:07:48.000000Z",
+        "updated_at": "2024-12-13T09:14:12.000000Z"
+    },
+    {
+        "id": 2,
+        "branch_id": 2,
+        "name": "Ahbab",
+        "slug": "ahbab",
+        "created_at": "2024-12-03T09:06:40.000000Z",
+        "updated_at": "2024-12-03T09:06:40.000000Z"
+    },
+    {
+        "id": 3,
+        "branch_id": 2,
+        "name": "China",
+        "slug": "china",
+        "created_at": "2024-12-03T09:06:50.000000Z",
+        "updated_at": "2024-12-03T09:06:50.000000Z"
+    },
+    {
+        "id": 4,
+        "branch_id": 2,
+        "name": "Keep Smiling",
+        "slug": "keep-smiling",
+        "created_at": "2024-12-03T09:07:02.000000Z",
+        "updated_at": "2024-12-03T09:07:02.000000Z"
+    },
+    {
+        "id": 5,
+        "branch_id": 2,
+        "name": "Maries",
+        "slug": "maries",
+        "created_at": "2024-12-03T09:07:10.000000Z",
+        "updated_at": "2024-12-03T09:07:10.000000Z"
+    },
+    {
+        "id": 6,
+        "branch_id": 2,
+        "name": "Mont Marte",
+        "slug": "mont-marte",
+        "created_at": "2024-12-03T09:07:19.000000Z",
+        "updated_at": "2024-12-03T09:07:19.000000Z"
+    },
+    {
+        "id": 7,
+        "branch_id": 2,
+        "name": "Camel",
+        "slug": "camel",
+        "created_at": "2024-12-03T09:07:25.000000Z",
+        "updated_at": "2024-12-03T09:07:25.000000Z"
+    },
+    {
+        "id": 8,
+        "branch_id": 2,
+        "name": "Fevicryl",
+        "slug": "fevicryl",
+        "created_at": "2024-12-03T09:07:41.000000Z",
+        "updated_at": "2024-12-03T09:07:41.000000Z"
+    },
+    {
+        "id": 9,
+        "branch_id": 2,
+        "name": "Giorgione",
+        "slug": "giorgione",
+        "created_at": "2024-12-03T09:07:54.000000Z",
+        "updated_at": "2024-12-03T09:07:54.000000Z"
+    },
+    {
+        "id": 10,
+        "branch_id": 2,
+        "name": "Xin Bowen",
+        "slug": "xin-bowen",
+        "created_at": "2024-12-03T09:08:14.000000Z",
+        "updated_at": "2024-12-03T09:08:14.000000Z"
+    },
+    {
+        "id": 11,
+        "branch_id": 2,
+        "name": "Worison",
+        "slug": "worison",
+        "created_at": "2024-12-03T09:08:38.000000Z",
+        "updated_at": "2024-12-03T09:08:38.000000Z"
+    },
+    {
+        "id": 12,
+        "branch_id": 2,
+        "name": "M&G",
+        "slug": "m-g",
+        "created_at": "2024-12-03T09:11:07.000000Z",
+        "updated_at": "2024-12-03T09:11:07.000000Z"
+    },
+    {
+        "id": 13,
+        "branch_id": 2,
+        "name": "sta",
+        "slug": "sta",
+        "created_at": "2024-12-03T09:11:23.000000Z",
+        "updated_at": "2024-12-03T09:11:23.000000Z"
+    },
+    {
+        "id": 14,
+        "branch_id": 2,
+        "name": "Pailot",
+        "slug": "pailot",
+        "created_at": "2024-12-03T09:11:33.000000Z",
+        "updated_at": "2024-12-03T09:11:33.000000Z"
+    },
+    {
+        "id": 15,
+        "branch_id": 2,
+        "name": "Brustro",
+        "slug": "brustro",
+        "created_at": "2024-12-03T09:11:44.000000Z",
+        "updated_at": "2024-12-03T09:11:44.000000Z"
+    },
+    {
+        "id": 16,
+        "branch_id": 2,
+        "name": "Sakura",
+        "slug": "sakura",
+        "created_at": "2024-12-03T09:12:10.000000Z",
+        "updated_at": "2024-12-03T09:12:10.000000Z"
+    },
+    {
+        "id": 17,
+        "branch_id": 2,
+        "name": "Superior",
+        "slug": "superior",
+        "created_at": "2024-12-03T09:12:28.000000Z",
+        "updated_at": "2024-12-03T09:12:28.000000Z"
+    },
+    {
+        "id": 18,
+        "branch_id": 2,
+        "name": "Pentel",
+        "slug": "pentel",
+        "created_at": "2024-12-03T09:12:47.000000Z",
+        "updated_at": "2024-12-03T09:12:47.000000Z"
+    },
+    {
+        "id": 19,
+        "branch_id": 2,
+        "name": "Doms",
+        "slug": "doms",
+        "created_at": "2024-12-03T09:13:11.000000Z",
+        "updated_at": "2024-12-03T09:13:11.000000Z"
+    },
+    {
+        "id": 20,
+        "branch_id": 2,
+        "name": "Deli",
+        "slug": "deli",
+        "created_at": "2024-12-03T09:13:34.000000Z",
+        "updated_at": "2024-12-03T09:13:34.000000Z"
+    },
+    {
+        "id": 21,
+        "branch_id": 2,
+        "name": "TiTi",
+        "slug": "titi",
+        "created_at": "2024-12-03T09:13:42.000000Z",
+        "updated_at": "2024-12-03T09:13:42.000000Z"
+    },
+    {
+        "id": 22,
+        "branch_id": 2,
+        "name": "Guangbo",
+        "slug": "guangbo",
+        "created_at": "2024-12-03T09:14:17.000000Z",
+        "updated_at": "2024-12-03T09:14:17.000000Z"
+    },
+    {
+        "id": 23,
+        "branch_id": 2,
+        "name": "Himi",
+        "slug": "himi",
+        "created_at": "2024-12-03T09:15:19.000000Z",
+        "updated_at": "2024-12-03T09:15:19.000000Z"
+    },
+    {
+        "id": 24,
+        "branch_id": 2,
+        "name": "Kuelox",
+        "slug": "kuelox",
+        "created_at": "2024-12-03T09:15:45.000000Z",
+        "updated_at": "2024-12-03T09:15:45.000000Z"
+    },
+    {
+        "id": 26,
+        "branch_id": 2,
+        "name": "Winsor & Newton",
+        "slug": "winsor-newton",
+        "created_at": "2024-12-13T09:13:49.000000Z",
+        "updated_at": "2024-12-13T09:13:49.000000Z"
+    },
+    {
+        "id": 27,
+        "branch_id": 2,
+        "name": "Baoke",
+        "slug": "baoke",
+        "created_at": "2024-12-13T09:41:59.000000Z",
+        "updated_at": "2024-12-13T09:41:59.000000Z"
+    },
+    {
+        "id": 28,
+        "branch_id": 2,
+        "name": "Toyo",
+        "slug": "toyo",
+        "created_at": "2024-12-13T09:45:17.000000Z",
+        "updated_at": "2024-12-13T09:45:17.000000Z"
+    },
+    {
+        "id": 29,
+        "branch_id": 2,
+        "name": "Artliner",
+        "slug": "artliner",
+        "created_at": "2024-12-16T08:40:43.000000Z",
+        "updated_at": "2024-12-16T08:41:41.000000Z"
+    },
+    {
+        "id": 30,
+        "branch_id": 2,
+        "name": "Dollar",
+        "slug": "dollar",
+        "created_at": "2024-12-17T08:23:26.000000Z",
+        "updated_at": "2024-12-17T08:23:26.000000Z"
+    },
+    {
+        "id": 31,
+        "branch_id": 2,
+        "name": "Apsara",
+        "slug": "apsara",
+        "created_at": "2024-12-17T08:26:01.000000Z",
+        "updated_at": "2024-12-17T08:26:01.000000Z"
+    },
+    {
+        "id": 32,
+        "branch_id": 2,
+        "name": "Linc",
+        "slug": "linc",
+        "created_at": "2024-12-17T10:54:24.000000Z",
+        "updated_at": "2024-12-17T10:54:24.000000Z"
+    },
+    {
+        "id": 33,
+        "branch_id": 2,
+        "name": "Berger",
+        "slug": "berger",
+        "created_at": "2024-12-21T09:48:39.000000Z",
+        "updated_at": "2024-12-21T09:48:39.000000Z"
+    },
+    {
+        "id": 34,
+        "branch_id": 2,
+        "name": "Shinhan",
+        "slug": "shinhan",
+        "created_at": "2024-12-22T08:18:51.000000Z",
+        "updated_at": "2024-12-22T08:18:51.000000Z"
+    },
+    {
+        "id": 35,
+        "branch_id": 2,
+        "name": "Gazi Publication",
+        "slug": "gazi-publication",
+        "created_at": "2024-12-22T09:41:04.000000Z",
+        "updated_at": "2024-12-22T09:41:04.000000Z"
+    },
+    {
+        "id": 36,
+        "branch_id": 2,
+        "name": "Canson",
+        "slug": "canson",
+        "created_at": "2024-12-22T10:19:31.000000Z",
+        "updated_at": "2024-12-22T10:19:31.000000Z"
+    },
+    {
+        "id": 37,
+        "branch_id": 2,
+        "name": "Hauser",
+        "slug": "hauser",
+        "created_at": "2024-12-22T10:25:55.000000Z",
+        "updated_at": "2024-12-22T10:25:55.000000Z"
+    },
+    {
+        "id": 38,
+        "branch_id": 2,
+        "name": "uni-ball",
+        "slug": "uni-ball",
+        "created_at": "2024-12-31T12:21:53.000000Z",
+        "updated_at": "2024-12-31T12:21:53.000000Z"
+    },
+    {
+        "id": 39,
+        "branch_id": 2,
+        "name": "Faber Castel",
+        "slug": "faber-castel",
+        "created_at": "2025-01-19T13:34:08.000000Z",
+        "updated_at": "2025-01-19T13:34:08.000000Z"
+    },
+    {
+        "id": 40,
+        "branch_id": 2,
+        "name": "Casio",
+        "slug": "casio",
+        "created_at": "2025-01-19T14:35:41.000000Z",
+        "updated_at": "2025-01-19T14:35:41.000000Z"
+    },
+    {
+        "id": 41,
+        "branch_id": 2,
+        "name": "C.T-Plus",
+        "slug": "c-t-plus",
+        "created_at": "2025-01-20T08:59:00.000000Z",
+        "updated_at": "2025-01-20T08:59:00.000000Z"
+    },
+    {
+        "id": 42,
+        "branch_id": 2,
+        "name": "Kangaro",
+        "slug": "kangaro",
+        "created_at": "2025-01-20T09:48:15.000000Z",
+        "updated_at": "2025-01-20T09:48:15.000000Z"
+    },
+    {
+        "id": 43,
+        "branch_id": 2,
+        "name": "Staedtler",
+        "slug": "staedtler",
+        "created_at": "2025-01-20T13:53:01.000000Z",
+        "updated_at": "2025-01-20T13:53:01.000000Z"
+    },
+    {
+        "id": 44,
+        "branch_id": 2,
+        "name": "PILOT",
+        "slug": "pilot",
+        "created_at": "2025-01-22T11:42:01.000000Z",
+        "updated_at": "2025-01-22T11:42:01.000000Z"
+    },
+    {
+        "id": 45,
+        "branch_id": 2,
+        "name": "Matador",
+        "slug": "matador",
+        "created_at": "2025-01-23T06:55:21.000000Z",
+        "updated_at": "2025-01-23T06:55:21.000000Z"
+    },
+    {
+        "id": 46,
+        "branch_id": 2,
+        "name": "Acron",
+        "slug": "acron",
+        "created_at": "2025-01-23T13:48:28.000000Z",
+        "updated_at": "2025-01-23T13:48:28.000000Z"
+    },
+    {
+        "id": 47,
+        "branch_id": 2,
+        "name": "Fevicol",
+        "slug": "fevicol",
+        "created_at": "2025-01-23T14:01:45.000000Z",
+        "updated_at": "2025-01-23T14:01:45.000000Z"
+    },
+    {
+        "id": 48,
+        "branch_id": 2,
+        "name": "Mondete",
+        "slug": "mondete",
+        "created_at": "2025-01-24T08:28:17.000000Z",
+        "updated_at": "2025-01-24T08:28:17.000000Z"
+    },
+    {
+        "id": 49,
+        "branch_id": 2,
+        "name": "JIAKEN",
+        "slug": "jiaken",
+        "created_at": "2025-01-24T16:11:26.000000Z",
+        "updated_at": "2025-01-24T16:11:26.000000Z"
+    },
+    {
+        "id": 50,
+        "branch_id": 2,
+        "name": "Fabriano",
+        "slug": "fabriano",
+        "created_at": "2025-01-24T16:14:38.000000Z",
+        "updated_at": "2025-01-24T16:14:38.000000Z"
+    },
+    {
+        "id": 51,
+        "branch_id": 2,
+        "name": "Nyoni",
+        "slug": "nyoni",
+        "created_at": "2025-01-24T17:01:44.000000Z",
+        "updated_at": "2025-01-24T17:01:44.000000Z"
+    },
+    {
+        "id": 52,
+        "branch_id": 2,
+        "name": "Test Good",
+        "slug": "test-good",
+        "created_at": "2025-01-24T18:43:40.000000Z",
+        "updated_at": "2025-01-24T18:43:40.000000Z"
+    },
+    {
+        "id": 53,
+        "branch_id": 2,
+        "name": "Monami",
+        "slug": "monami",
+        "created_at": "2025-01-26T11:01:55.000000Z",
+        "updated_at": "2025-01-26T11:01:55.000000Z"
+    },
+    {
+        "id": 54,
+        "branch_id": 2,
+        "name": "Yixin",
+        "slug": "yixin",
+        "created_at": "2025-01-29T11:52:52.000000Z",
+        "updated_at": "2025-01-29T11:52:52.000000Z"
+    },
+    {
+        "id": 55,
+        "branch_id": 2,
+        "name": "Mini Cute",
+        "slug": "mini-cute",
+        "created_at": "2025-01-29T17:16:23.000000Z",
+        "updated_at": "2025-01-29T17:16:23.000000Z"
+    },
+    {
+        "id": 56,
+        "branch_id": 2,
+        "name": "Baile",
+        "slug": "baile",
+        "created_at": "2025-01-30T13:25:24.000000Z",
+        "updated_at": "2025-01-30T13:25:24.000000Z"
+    },
+    {
+        "id": 57,
+        "branch_id": 2,
+        "name": "Mirror",
+        "slug": "mirror",
+        "created_at": "2025-01-30T15:32:22.000000Z",
+        "updated_at": "2025-01-30T15:32:22.000000Z"
+    },
+    {
+        "id": 58,
+        "branch_id": 2,
+        "name": "Fabriano",
+        "slug": "fabriano",
+        "created_at": "2025-02-02T08:40:53.000000Z",
+        "updated_at": "2025-02-02T08:40:53.000000Z"
+    },
+    {
+        "id": 59,
+        "branch_id": 2,
+        "name": "Hero",
+        "slug": "hero",
+        "created_at": "2025-02-02T10:23:00.000000Z",
+        "updated_at": "2025-02-02T10:23:00.000000Z"
+    },
+    {
+        "id": 60,
+        "branch_id": 2,
+        "name": "Pelikan",
+        "slug": "pelikan",
+        "created_at": "2025-02-02T10:29:51.000000Z",
+        "updated_at": "2025-02-02T10:29:51.000000Z"
+    },
+    {
+        "id": 61,
+        "branch_id": 2,
+        "name": "dozen",
+        "slug": "dozen",
+        "created_at": "2025-02-02T16:53:31.000000Z",
+        "updated_at": "2025-02-02T16:53:31.000000Z"
+    },
+    {
+        "id": 62,
+        "branch_id": 2,
+        "name": "Pentonic",
+        "slug": "pentonic",
+        "created_at": "2025-02-05T12:02:15.000000Z",
+        "updated_at": "2025-02-05T12:02:15.000000Z"
+    },
+    {
+        "id": 63,
+        "branch_id": 2,
+        "name": "Petra",
+        "slug": "petra",
+        "created_at": "2025-02-08T11:48:01.000000Z",
+        "updated_at": "2025-02-08T11:48:01.000000Z"
+    },
+    {
+        "id": 64,
+        "branch_id": 2,
+        "name": "Parker",
+        "slug": "parker",
+        "created_at": "2025-02-08T14:07:34.000000Z",
+        "updated_at": "2025-02-08T14:07:34.000000Z"
+    },
+    {
+        "id": 65,
+        "branch_id": 2,
+        "name": "Cross",
+        "slug": "cross",
+        "created_at": "2025-02-08T14:20:56.000000Z",
+        "updated_at": "2025-02-08T14:20:56.000000Z"
+    },
+    {
+        "id": 66,
+        "branch_id": 2,
+        "name": "Pelikan",
+        "slug": "pelikan",
+        "created_at": "2025-02-08T14:50:59.000000Z",
+        "updated_at": "2025-02-08T14:50:59.000000Z"
+    },
+    {
+        "id": 67,
+        "branch_id": 2,
+        "name": "Sheaffer",
+        "slug": "sheaffer",
+        "created_at": "2025-02-08T15:00:45.000000Z",
+        "updated_at": "2025-02-08T15:11:11.000000Z"
+    },
+    {
+        "id": 68,
+        "branch_id": 2,
+        "name": "Waterman",
+        "slug": "waterman",
+        "created_at": "2025-02-08T15:25:28.000000Z",
+        "updated_at": "2025-02-08T15:25:28.000000Z"
+    },
+    {
+        "id": 69,
+        "branch_id": 2,
+        "name": "Hearts",
+        "slug": "hearts",
+        "created_at": "2025-02-16T06:06:46.000000Z",
+        "updated_at": "2025-02-16T06:06:46.000000Z"
+    },
+    {
+        "id": 70,
+        "branch_id": 2,
+        "name": "Zinix",
+        "slug": "zinix",
+        "created_at": "2025-02-20T07:47:35.000000Z",
+        "updated_at": "2025-02-20T07:47:35.000000Z"
+    },
+    {
+        "id": 71,
+        "branch_id": 2,
+        "name": "Languo",
+        "slug": "languo",
+        "created_at": "2025-02-23T06:23:54.000000Z",
+        "updated_at": "2025-02-23T06:23:54.000000Z"
+    },
+    {
+        "id": 72,
+        "branch_id": 2,
+        "name": "Florence bd",
+        "slug": "florence-bd",
+        "created_at": "2025-03-05T07:06:33.000000Z",
+        "updated_at": "2025-03-05T07:06:33.000000Z"
+    },
+    {
+        "id": 73,
+        "branch_id": 2,
+        "name": "Ai Sha Ke",
+        "slug": "ai-sha-ke",
+        "created_at": "2025-03-05T08:17:22.000000Z",
+        "updated_at": "2025-03-05T08:17:22.000000Z"
+    },
+    {
+        "id": 74,
+        "branch_id": 2,
+        "name": "RUI",
+        "slug": "rui",
+        "created_at": "2025-03-12T16:20:22.000000Z",
+        "updated_at": "2025-03-12T16:20:22.000000Z"
+    },
+    {
+        "id": 75,
+        "branch_id": 2,
+        "name": "KIDARIO",
+        "slug": "kidario",
+        "created_at": "2025-03-12T16:22:10.000000Z",
+        "updated_at": "2025-03-12T16:22:10.000000Z"
+    },
+    {
+        "id": 76,
+        "branch_id": 2,
+        "name": "Rotring",
+        "slug": "rotring",
+        "created_at": "2025-03-12T17:00:42.000000Z",
+        "updated_at": "2025-03-12T17:00:42.000000Z"
+    },
+    {
+        "id": 77,
+        "branch_id": 2,
+        "name": "Rabbi supper",
+        "slug": "rabbi-supper",
+        "created_at": "2025-03-13T06:38:06.000000Z",
+        "updated_at": "2025-03-13T06:38:06.000000Z"
+    },
+    {
+        "id": 78,
+        "branch_id": 2,
+        "name": "jigong",
+        "slug": "jigong",
+        "created_at": "2025-03-19T10:06:20.000000Z",
+        "updated_at": "2025-03-19T10:06:20.000000Z"
+    },
+    {
+        "id": 79,
+        "branch_id": 2,
+        "name": "Jinhao",
+        "slug": "jinhao",
+        "created_at": "2025-03-21T10:44:49.000000Z",
+        "updated_at": "2025-03-21T10:44:49.000000Z"
+    },
+    {
+        "id": 80,
+        "branch_id": 2,
+        "name": "Pan wen bo",
+        "slug": "pan-wen-bo",
+        "created_at": "2025-03-23T17:34:45.000000Z",
+        "updated_at": "2025-03-23T17:34:45.000000Z"
+    },
+    {
+        "id": 81,
+        "branch_id": 2,
+        "name": "Lamy",
+        "slug": "lamy",
+        "created_at": "2025-04-04T12:38:39.000000Z",
+        "updated_at": "2025-04-04T12:38:39.000000Z"
+    },
+    {
+        "id": 82,
+        "branch_id": 2,
+        "name": "Flysea",
+        "slug": "flysea",
+        "created_at": "2025-04-05T11:21:41.000000Z",
+        "updated_at": "2025-04-05T11:21:41.000000Z"
+    },
+    {
+        "id": 83,
+        "branch_id": 2,
+        "name": "Art Rangers",
+        "slug": "art-rangers",
+        "created_at": "2025-04-13T06:24:05.000000Z",
+        "updated_at": "2025-04-13T06:24:05.000000Z"
+    },
+    {
+        "id": 84,
+        "branch_id": 2,
+        "name": "Art Rangers",
+        "slug": "art-rangers",
+        "created_at": "2025-04-18T08:39:53.000000Z",
+        "updated_at": "2025-04-18T08:39:53.000000Z"
+    },
+    {
+        "id": 85,
+        "branch_id": 2,
+        "name": "Flair",
+        "slug": "flair",
+        "created_at": "2025-04-19T07:17:56.000000Z",
+        "updated_at": "2025-04-19T07:17:56.000000Z"
+    },
+    {
+        "id": 86,
+        "branch_id": 2,
+        "name": "Leto",
+        "slug": "leto",
+        "created_at": "2025-04-19T08:54:28.000000Z",
+        "updated_at": "2025-04-19T08:54:28.000000Z"
+    },
+    {
+        "id": 87,
+        "branch_id": 2,
+        "name": "DIKAWEN",
+        "slug": "dikawen",
+        "created_at": "2025-04-20T10:40:15.000000Z",
+        "updated_at": "2025-04-20T10:40:15.000000Z"
+    },
+    {
+        "id": 88,
+        "branch_id": 2,
+        "name": "Y PLUS",
+        "slug": "y-plus",
+        "created_at": "2025-04-24T10:01:38.000000Z",
+        "updated_at": "2025-04-24T10:01:38.000000Z"
+    },
+    {
+        "id": 89,
+        "branch_id": 2,
+        "name": "Xiaoyuam",
+        "slug": "xiaoyuam",
+        "created_at": "2025-04-24T15:24:57.000000Z",
+        "updated_at": "2025-04-24T15:24:57.000000Z"
+    },
+    {
+        "id": 90,
+        "branch_id": 2,
+        "name": "Songdao",
+        "slug": "songdao",
+        "created_at": "2025-04-24T15:28:08.000000Z",
+        "updated_at": "2025-04-24T15:28:08.000000Z"
+    },
+    {
+        "id": 91,
+        "branch_id": 2,
+        "name": "Songdao",
+        "slug": "songdao",
+        "created_at": "2025-04-24T15:28:19.000000Z",
+        "updated_at": "2025-04-24T15:28:19.000000Z"
+    },
+    {
+        "id": 92,
+        "branch_id": 2,
+        "name": "KOLA",
+        "slug": "kola",
+        "created_at": "2025-05-07T08:07:36.000000Z",
+        "updated_at": "2025-05-07T08:07:36.000000Z"
+    },
+    {
+        "id": 93,
+        "branch_id": 2,
+        "name": "potentate",
+        "slug": "potentate",
+        "created_at": "2025-05-09T04:57:16.000000Z",
+        "updated_at": "2025-05-09T04:57:16.000000Z"
+    },
+    {
+        "id": 94,
+        "branch_id": 2,
+        "name": "potentate",
+        "slug": "potentate",
+        "created_at": "2025-05-09T04:58:06.000000Z",
+        "updated_at": "2025-05-09T04:58:06.000000Z"
+    },
+    {
+        "id": 95,
+        "branch_id": 2,
+        "name": "Acmeliae",
+        "slug": "acmeliae",
+        "created_at": "2025-05-31T13:35:53.000000Z",
+        "updated_at": "2025-05-31T13:35:53.000000Z"
+    },
+    {
+        "id": 96,
+        "branch_id": 2,
+        "name": "Hauser",
+        "slug": "hauser",
+        "created_at": "2025-06-22T13:52:18.000000Z",
+        "updated_at": "2025-06-22T13:52:18.000000Z"
+    },
+    {
+        "id": 97,
+        "branch_id": 2,
+        "name": "Mungyo",
+        "slug": "mungyo",
+        "created_at": "2025-06-22T14:05:50.000000Z",
+        "updated_at": "2025-06-22T14:05:50.000000Z"
+    },
+    {
+        "id": 98,
+        "branch_id": 2,
+        "name": "Flair",
+        "slug": "flair",
+        "created_at": "2025-06-22T14:43:34.000000Z",
+        "updated_at": "2025-06-22T14:43:34.000000Z"
+    },
+    {
+        "id": 99,
+        "branch_id": 2,
+        "name": "Good Luck",
+        "slug": "good-luck",
+        "created_at": "2025-07-14T09:30:28.000000Z",
+        "updated_at": "2025-07-14T09:30:28.000000Z"
+    },
+    {
+        "id": 100,
+        "branch_id": 2,
+        "name": "Daniel Smith",
+        "slug": "daniel-smith",
+        "created_at": "2025-08-15T10:21:48.000000Z",
+        "updated_at": "2025-08-15T10:21:48.000000Z"
+    },
+    {
+        "id": 101,
+        "branch_id": 2,
+        "name": "Raphael",
+        "slug": "raphael",
+        "created_at": "2025-08-17T09:03:48.000000Z",
+        "updated_at": "2025-08-17T09:03:48.000000Z"
+    },
+    {
+        "id": 102,
+        "branch_id": 2,
+        "name": "Mono",
+        "slug": "mono",
+        "created_at": "2025-08-17T09:18:47.000000Z",
+        "updated_at": "2025-08-17T09:18:47.000000Z"
+    },
+    {
+        "id": 103,
+        "branch_id": 2,
+        "name": "flexooffice",
+        "slug": "flexooffice",
+        "created_at": "2025-08-17T11:50:16.000000Z",
+        "updated_at": "2025-08-17T11:50:16.000000Z"
+    },
+    {
+        "id": 104,
+        "branch_id": 2,
+        "name": "Mungyo",
+        "slug": "mungyo",
+        "created_at": "2025-08-23T08:42:33.000000Z",
+        "updated_at": "2025-08-23T08:42:33.000000Z"
+    },
+    {
+        "id": 105,
+        "branch_id": 2,
+        "name": "Cretacolour",
+        "slug": "cretacolour",
+        "created_at": "2025-08-24T06:05:43.000000Z",
+        "updated_at": "2025-08-24T06:05:43.000000Z"
+    },
+    {
+        "id": 106,
+        "branch_id": 2,
+        "name": "WeiZhuang",
+        "slug": "weizhuang",
+        "created_at": "2025-09-04T15:09:01.000000Z",
+        "updated_at": "2025-09-04T15:09:01.000000Z"
+    },
+    {
+        "id": 107,
+        "branch_id": 2,
+        "name": "cello",
+        "slug": "cello",
+        "created_at": "2025-11-22T15:56:34.000000Z",
+        "updated_at": "2025-11-22T15:56:34.000000Z"
+    },
+    {
+        "id": 108,
+        "branch_id": 2,
+        "name": "Kanwrite",
+        "slug": "kanwrite",
+        "created_at": "2025-11-23T13:30:41.000000Z",
+        "updated_at": "2025-11-23T13:30:41.000000Z"
+    },
+    {
+        "id": 109,
+        "branch_id": 2,
+        "name": "Little Birdie",
+        "slug": "little-birdie",
+        "created_at": "2025-11-23T15:48:24.000000Z",
+        "updated_at": "2025-11-23T15:48:24.000000Z"
+    },
+    {
+        "id": 110,
+        "branch_id": 2,
+        "name": "Bosny",
+        "slug": "bosny",
+        "created_at": "2025-11-26T14:04:13.000000Z",
+        "updated_at": "2025-11-26T14:04:13.000000Z"
+    },
+    {
+        "id": 111,
+        "branch_id": 2,
+        "name": "Liquitex",
+        "slug": "liquitex",
+        "created_at": "2025-11-30T09:37:19.000000Z",
+        "updated_at": "2025-11-30T09:37:19.000000Z"
+    },
+    {
+        "id": 112,
+        "branch_id": 2,
+        "name": "Prismacolor",
+        "slug": "prismacolor",
+        "created_at": "2025-11-30T10:08:42.000000Z",
+        "updated_at": "2025-11-30T10:08:42.000000Z"
+    },
+    {
+        "id": 113,
+        "branch_id": 2,
+        "name": "TOMBOW",
+        "slug": "tombow",
+        "created_at": "2025-11-30T10:43:00.000000Z",
+        "updated_at": "2025-11-30T10:43:00.000000Z"
+    },
+    {
+        "id": 114,
+        "branch_id": 2,
+        "name": "Baohong",
+        "slug": "baohong",
+        "created_at": "2026-03-14T16:04:36.000000Z",
+        "updated_at": "2026-03-14T16:04:36.000000Z"
+    },
+    {
+        "id": 115,
+        "branch_id": 2,
+        "name": "Zebra",
+        "slug": "zebra",
+        "created_at": "2026-03-28T11:43:33.000000Z",
+        "updated_at": "2026-03-28T11:43:33.000000Z"
+    },
+    {
+        "id": 116,
+        "branch_id": 2,
+        "name": "koi",
+        "slug": "koi",
+        "created_at": "2026-04-03T15:39:53.000000Z",
+        "updated_at": "2026-04-03T15:39:53.000000Z"
+    },
+    {
+        "id": 117,
+        "branch_id": 2,
+        "name": "Rotring",
+        "slug": "rotring",
+        "created_at": "2026-04-09T04:43:07.000000Z",
+        "updated_at": "2026-04-09T04:43:07.000000Z"
+    },
+    {
+        "id": 118,
+        "branch_id": 2,
+        "name": "Mont Blanc",
+        "slug": "mont-blanc",
+        "created_at": "2026-05-04T10:02:16.000000Z",
+        "updated_at": "2026-05-04T10:02:16.000000Z"
+    },
+    {
+        "id": 119,
+        "branch_id": 2,
+        "name": "MIJELLO MISSION Gold",
+        "slug": "mijello-mission-gold",
+        "created_at": "2026-07-08T11:29:42.000000Z",
+        "updated_at": "2026-07-08T11:29:42.000000Z"
+    },
+    {
+        "id": 120,
+        "branch_id": 2,
+        "name": "KALOUR",
+        "slug": "kalour",
+        "created_at": "2026-07-10T05:46:41.000000Z",
+        "updated_at": "2026-07-10T05:46:41.000000Z"
+    }
+]

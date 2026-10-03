@@ -1,0 +1,54 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class RolesTableSeeder extends Seeder
+{
+
+    /**
+     * Auto generated seed file
+     *
+     * @return void
+     */
+    public function run()
+    {
+
+
+// // DB::table('roles')->delete();
+        DB::table('roles')->insertOrIgnore(array(
+            0 =>
+            array(
+                'id' => 1,
+                'name' => 'Admin',
+                'slug' => 'admin',
+                'status' => 1,
+                'permission' => '{"bank-account":{"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true},"brand":{"index":true,"store":true,"update":true,"destroy":true},"category":{"index":true,"store":true,"update":true,"destroy":true},"customer":{"index":true,"store":true,"update":true,"destroy":true},"expense":{"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true,"category-index":true,"category-store":true,"category-update":true,"category-destroy":true},"invoice":{"pay":true,"print":true,"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true},"payment":{"pay-customer":true,"pay-customer-store":true,"pay-supplier":true,"pay-supplier-store":true,"customer-destroy":true,"supplier-destroy":true},"product":{"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true},"purchase":{"pay":true,"print":true,"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true},"report":{"stock":true,"supplier-ledger":true,"customer-ledger":true},"roles-permission":{"index":true,"create":true,"store":true,"edit":true,"update":true},"setting":{"index":true,"update":true},"status":{"update":true,"download":true},"supplier":{"index":true,"store":true,"update":true,"destroy":true},"unit":{"index":true,"store":true,"update":true,"destroy":true},"user":{"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true}}',
+                'created_at' => NULL,
+                'updated_at' => '2023-11-22 20:25:57',
+            ),
+            1 =>
+            array(
+                'id' => 2,
+                'name' => 'Super Admin',
+                'slug' => 'superadmin',
+                'status' => 1,
+                'permission' => '{"bank-account":{"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true},"brand":{"index":true,"store":true,"update":true,"destroy":true},"category":{"index":true,"store":true,"update":true,"destroy":true},"customer":{"index":true,"store":true,"update":true,"destroy":true},"expense":{"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true,"category-index":true,"category-store":true,"category-update":true,"category-destroy":true},"invoice":{"pay":true,"print":true,"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true},"payment":{"pay-customer":true,"pay-customer-store":true,"pay-supplier":true,"pay-supplier-store":true,"customer-destroy":true,"supplier-destroy":true},"product":{"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true},"purchase":{"pay":true,"print":true,"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true},"report":{"stock":true,"supplier-ledger":true,"customer-ledger":true},"roles-permission":{"index":true,"create":true,"store":true,"edit":true,"update":true},"setting":{"index":true,"update":true},"status":{"update":true,"download":true},"supplier":{"index":true,"store":true,"update":true,"destroy":true},"unit":{"index":true,"store":true,"update":true,"destroy":true},"user":{"index":true,"create":true,"store":true,"show":true,"edit":true,"update":true,"destroy":true}}',
+                'created_at' => NULL,
+                'updated_at' => '2023-11-22 20:25:57',
+            ),
+            2 =>
+            array(
+                'id' => 3,
+                'name' => 'Salesman',
+                'slug' => 'salesman',
+                'status' => 1,
+                'permission' => '{"due": {"invoice": false}, "inv": {"edit": false}, "otp": {"verify": false}, "roi": {"tracking": false}, "sms": {"index": false, "store": false, "update": false, "destroy": false}, "note": {"download": false}, "size": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false, "ajaxStore": false}, "unit": {"index": false, "store": false, "update": false, "destroy": false}, "used": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "user": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "asset": {"index": false, "store": false, "create": false, "destroy": false}, "brand": {"index": false, "store": false, "update": false, "destroy": false}, "color": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false, "ajaxStore": false}, "damage": {"index": false, "create": false, "delete": false, "insert": false}, "pathao": {"edit": false, "show": false, "areas": false, "index": false, "order": false, "store": false, "zones": false, "create": false, "update": false, "destroy": false}, "report": {"low": false, "sale": false, "user": false, "daily": false, "stock": false, "product": false, "service": false, "customer": false, "purchase": false, "inventory": false, "item-sale": false, "used-stock": false, "profit-loss": false, "customer-due": false, "supplier-due": false, "account-ledger": false, "customer-ledger": false, "supplier-ledger": false, "ownership-ledger": false}, "return": {"sale": false, "create": false, "delete": false, "insert": false, "purchase": false}, "status": {"update": false, "download": false}, "ad-cost": {"index": false, "store": false, "create": false, "destroy": false}, "barcode": {"print": false}, "courier": {"tracking": false}, "default": {"livewire": false}, "expense": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false, "category-index": false, "category-store": false, "category-update": false, "category-destroy": false}, "invoice": {"ex": false, "up": false, "pay": true, "edit": false, "show": true, "index": true, "print": true, "store": true, "create": true, "online": true, "return": false, "update": false, "destroy": false, "exchange": false, "offline-data": false}, "payment": {"pay-customer": false, "pay-supplier": false, "customer-destroy": false, "supplier-destroy": false, "pay-customer-store": false, "pay-supplier-store": false}, "payroll": {"attendance": false, "department": false, "leave-type": false, "designation": false, "salary-sheet": false, "leave-application": false}, "product": {"edit": false, "index": true, "store": false, "create": false, "search": true, "update": false, "destroy": false, "update-description": false}, "service": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "setting": {"index": false, "update": false}, "category": {"index": false, "store": false, "update": false, "destroy": false}, "customer": {"index": true, "store": true, "update": false, "destroy": false, "previous": false, "vehicles": false, "fraud-check": false}, "debugbar": {"cache": false, "assets": false, "queries": false, "clockwork": false, "openhandler": false}, "employee": {"edit": false, "show": false, "index": false, "store": false, "create": false, "salary": false, "update": false, "destroy": false, "payment": false}, "multiple": {"barcode": false}, "platform": {"index": false, "store": false, "update": false, "destroy": false}, "purchase": {"pay": false, "edit": false, "show": false, "index": false, "print": false, "store": false, "updat": false, "create": false, "return": false, "search": false, "update": false, "destroy": false, "imei-print": false}, "supplier": {"index": false, "store": false, "update": false, "destroy": false}, "transfer": {"edit": false, "show": false, "index": false, "print": false, "store": false, "cancel": false, "create": false, "update": false, "destroy": false, "receive": false}, "dashboard": {"filter": false, "dashboard": false}, "ownership": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "quotation": {"edit": false, "show": false, "index": false, "print": false, "store": false, "create": false, "update": false, "destroy": false}, "variation": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "ai-auditor": {"fix": false, "audit": false, "index": false}, "ai-chatbot": {"chat": false, "clear": false}, "rtnPurchase": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "super-admin": {"settings": false}, "usedProduct": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "activity-log": {"clear": false, "index": false, "details": false}, "bank-account": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "installments": {"show": false, "index": false, "collect": false, "overdue": false, "completed": false, "today-due": false, "today-collection": false}, "stock-adjust": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "usedPurchase": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "service-center": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "supplier-claim": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "warranty-claim": {"edit": false, "show": false, "check": false, "index": false, "store": false, "create": false, "update": false, "destroy": false, "ajax-search": false, "update-check": false}, "service-invoice": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "service-receive": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}, "roles-permission": {"edit": false, "index": false, "store": false, "create": false, "update": false}, "warranty-delivery": {"edit": false, "show": false, "index": false, "store": false, "create": false, "update": false, "destroy": false}}',
+                'created_at' => NULL,
+                'updated_at' => NULL,
+            )
+        ));
+    }
+}

@@ -1,0 +1,104 @@
+/* --- Windows 11 Style Calculator CSS --- */
+@keyframes calcSlideIn {
+    from { opacity:0; transform: scale(0.94) translateY(-10px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+}
+@keyframes calcSlideOut {
+    from { opacity:1; transform: scale(1); }
+    to   { opacity:0; transform: scale(0.94) translateY(-8px); }
+}
+
+/* Memory buttons */
+.calc-mem {
+    background: #1c1c1c;
+    border: none;
+    color: rgba(255,255,255,0.65);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 7px 2px;
+    cursor: pointer;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    transition: background 0.12s, color 0.12s;
+    letter-spacing: 0.3px; 
+}
+.calc-mem:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+}
+.calc-mem:active { background: rgba(255,255,255,0.12); }
+
+/* Base button */
+.calc-btn {
+    background: #2d2d2d;
+    border: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    cursor: pointer;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    transition: background 0.1s ease;
+    position: relative;
+    overflow: hidden;
+    outline: none;
+}
+.calc-btn:hover  { background: #3a3a3a; }
+.calc-btn:active { background: #454545; transform: scale(0.96); transition: all 0.06s; }
+
+/* Number buttons */
+.calc-num  { background: #2d2d2d; }
+.calc-num:hover { background: #3c3c3c; }
+
+/* Scientific buttons */
+.calc-sci  { background: #252525; color: rgba(255,255,255,0.85); font-size: 12px; }
+.calc-sci:hover { background: #333333; }
+
+/* Operator buttons */
+.calc-op   { background: #2d2d2d; color: rgba(255,255,255,0.9); font-size: 16px; }
+.calc-op:hover { background: #3c3c3c; }
+
+/* Equals button — pink/purple like Win11 */
+.calc-equal {
+    background: #8b5cf6 !important;
+    color: #fff !important;
+    font-size: 18px;
+    font-weight: 400;
+}
+.calc-equal:hover  { background: #7c3aed !important; }
+.calc-equal:active { background: #6d28d9 !important; }
+
+/* Light mode overrides */
+body:not(.dark-theme) #calc-card {
+    background: #f3f3f3;
+    border-color: rgba(0,0,0,0.12);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+}
+body:not(.dark-theme) #calc-header  { background: #f3f3f3; }
+body:not(.dark-theme) #calc-display { color: #1c1c1c; }
+body:not(.dark-theme) #calc-history { color: rgba(0,0,0,0.4); }
+body:not(.dark-theme) .calc-btn     { background: #e9e9e9; color: #1c1c1c; }
+body:not(.dark-theme) .calc-btn:hover { background: #d9d9d9; }
+body:not(.dark-theme) .calc-sci     { background: #e0e0e0; color: #1c1c1c; }
+body:not(.dark-theme) .calc-sci:hover { background: #d0d0d0; }
+body:not(.dark-theme) .calc-op      { background: #e9e9e9; }
+body:not(.dark-theme) .calc-mem     { background: #f3f3f3; color: rgba(0,0,0,0.55); border-bottom: 1px solid rgba(0,0,0,0.08); }
+body:not(.dark-theme) .calc-mem:hover { background: #e0e0e0; color: #000; }
+body:not(.dark-theme) #calculator-close { color: #444; }
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    #calc-wrapper {
+        top: 50% !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-width: 260px !important;
+    }
+    #calc-card {
+        width: 100% !important;
+    }
+}

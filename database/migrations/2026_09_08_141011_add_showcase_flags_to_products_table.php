@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->boolean('is_new_arrival')->default(0)->after('status')->index();
+            $table->boolean('is_top_selling')->default(0)->after('is_new_arrival')->index();
+            $table->boolean('is_featured')->default(0)->after('is_top_selling')->index();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn(['is_new_arrival', 'is_top_selling', 'is_featured']);
+        });
+    }
+};

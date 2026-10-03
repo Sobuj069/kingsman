@@ -1,0 +1,352 @@
+.header_part_sm {
+    padding: 10px 0px;
+}
+
+.header_icon {
+   
+    float: right;
+}
+
+.header_icon ul {
+    float: right;
+}
+
+.header_icon ul li {
+    float: left;
+    padding: 0px 0px;
+
+
+}
+.header_icon ul li a{
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #afadad;
+    line-height: 50px;
+    display: block;
+    color: #1D2939;
+    margin-left: 10px;
+    
+
+}
+.header_icon ul li a i {
+    font-size: 16px;
+    color: #1D2939;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.header_icon ul li:last-child {
+    padding-right: 0;
+}
+
+.header_icon ul li:hover a  {
+    background: #ff6700;
+    border-color: #ff6700;
+} 
+.header_icon ul li:hover a i{
+    color: #F2F4F7;
+} 
+
+/*main_part start*/
+
+
+.main_part {
+    background: #F2F4F7;
+}
+
+
+
+.overview {
+    float: left;
+}
+
+.overview h5 {
+    padding: 0px 5px;
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.overview_btn {
+    float: right;
+}
+
+.overview_btn .btn-group {
+    /* margin: 15px 0px 10px 10px; */
+} 
+
+.today_btn {
+    padding: 15px 20px;
+    border: 1px solid #8f8f8f;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+.today_item {
+
+    width: 100%;
+    height: 80px;
+
+    border-radius: 10px;
+    background: #ffffff;
+    padding: 2px;
+    margin: 20px 0px;
+}
+
+.today_item h6 {
+    padding-top: 5px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.today_item .sale {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: #175CD3;
+
+}
+
+.today_item .purchase {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: #6938EF;
+
+}
+
+.today_item .expense {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: #D92D20;
+
+}
+
+.today_profit {
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 10px 5px;
+    margin-top: 20px;
+}
+
+.today_dtls {
+    width: 50%;
+    float: left;
+}
+
+.today_dtls .dtls_icon {
+    margin-left: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #039855;
+}
+
+.today_dtls .dtls_hding h5 {
+    font-size: 15px;
+    font-weight: 400;
+    color: #000;
+    padding: 5px 15px;
+}
+
+.today_amount {
+    width: 50%;
+    float: left;
+}
+
+.today_amount h5 {
+    float: right;
+    font-size: 15px;
+    font-weight: 400;
+    color: #039855;
+    margin-right: 15px;
+    padding: 4px 0px;
+}
+
+.transaction_part {
+    width: 397px;
+    margin-top: 30px;
+
+
+}
+
+.Purchase_item {
+   height: 264px;
+  
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 12px 15px;
+    margin-right: 10px;
+    margin: 30px 0px;
+}
+
+.Purchase_sale {
+    height: 264px;
+
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 12px 15px;
+    margin-right: 10px;
+    margin: 30px 0px;
+
+}
+
+.Purchase_item_dtls {
+    margin: 15px 0px;
+    height: 68px;
+}
+
+.Purchase_item_dtls h6 {
+    text-align: start;
+    font-size: 12px;
+    font-weight: 500;
+    color: #667085;
+    text-transform: capitalize;
+    padding-bottom: 12px;
+}
+
+.Purchase_item_dtls .item_due {
+    text-align: start;
+    font-size: 16px;
+    font-weight: 400;
+    color: #1D2939;
+    text-transform: capitalize;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #000CE2;
+}
+
+.Purchase_item_dtls .item_amount {
+    text-align: start;
+    font-size: 16px;
+    font-weight: 400;
+    color: #1D2939;
+    text-transform: capitalize;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #FF6700;
+}
+
+.Purchase_item_dtls .ttl_due {
+    text-align: start;
+    font-size: 16px;
+    font-weight: 400;
+    color: #1D2939;
+    text-transform: capitalize;
+
+
+}
+
+.Purchase_item_dtls .Sale_due {
+    text-align: start;
+    font-size: 16px;
+    font-weight: 400;
+    color: #1D2939;
+    text-transform: capitalize;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #12B76A;
+}
+
+.Purchase_item_dtls .Sale_amount {
+    text-align: start;
+    font-size: 16px;
+    font-weight: 400;
+    color: #1D2939;
+    text-transform: capitalize;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #0BA5EC;
+}
+
+.Purchase_item_dtls .Sale_total {
+    text-align: start;
+    font-size: 16px;
+    font-weight: 400;
+    color: #1D2939;
+    text-transform: capitalize;
+} 
+
+/*main_part end*/
+/*footer_part start*/
+
+.footer_item {
+    padding: 15px 0px;
+    position: fixed;
+    right: 0;
+    bottom:0;
+}
+
+.footer_content {
+   background: #fff;
+}
+
+.footer_content ul {
+   float: right;
+   list-style: none;
+}
+.footer_content ul li{
+    float: left;
+}
+
+
+.footer_icon {
+    padding-top: 3px;
+    width: 68px;
+    height: 44px;
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: capitalize;
+    color: #344054;
+    border-radius: 15px;
+    background: #fff;
+}
+.footer_con {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #344054;
+}
+.footer_content {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* background: #fff; */
+    padding: 8px 0;
+    /* border-top: 1px solid #afadad; */
+    justify-content: space-around;
+    
+}
+
+.footer_content ul li:last-child {
+    margin-right: 0px;
+}
+
+.footer_content ul li:first-child {
+    margin-left: 0px;
+}
+
+.footer_content ul li:hover i {
+    color: #FB6514;
+}
+
+.footer_content ul li:hover h5 {
+    color: #FB6514;
+}
+
+.footer_icon a.active {
+    color: #FB6514;
+} 
+
+.menubar{
+    text-align: center;
+}

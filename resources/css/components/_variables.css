@@ -1,0 +1,35 @@
+/* --- Global Variables --- */
+:root {
+    --sp-bg: #f1f5f9;
+    --sp-card-bg: #ffffff;
+    --sp-card-border: #e2e8f0;
+    --sp-text-primary: #0f172a;
+    --sp-text-secondary: #64748b;
+    --sp-text-muted: #94a3b8;
+    --sp-input-bg: #ffffff;
+    --sp-input-border: #cbd5e1;
+    --sp-input-focus: #3b82f6;
+    --sp-tab-bg: #f1f5f9;
+    --sp-tab-active-bg: #ffffff;
+    --sp-btn-bg: #0f172a;
+    --sp-btn-text: #ffffff;
+    --sp-divider: #f1f5f9;
+}
+
+/* Dark Theme Overrides */
+.dark-theme, body.dark-theme {
+    --sp-bg: #0f172a;
+    --sp-card-bg: #1e293b;
+    --sp-card-border: #334155;
+    --sp-text-primary: #f8fafc;
+    --sp-text-secondary: #94a3b8;
+    --sp-text-muted: #64748b;
+    --sp-input-bg: #0f172a;
+    --sp-input-border: #334155;
+    --sp-input-focus: #3b82f6;
+    --sp-tab-bg: #0f172a;
+    --sp-tab-active-bg: #334155;
+    --sp-btn-bg: #3b82f6;
+    --sp-btn-text: #ffffff;
+    --sp-divider: #334155;
+}
