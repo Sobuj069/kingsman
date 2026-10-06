@@ -177,7 +177,9 @@ class InvoiceController extends Controller
         $sdate = $request->startDate ? Carbon::createFromDate($request->startDate)->toDateString() : null;
         $edate = $request->endDate ? Carbon::createFromDate($request->endDate)->toDateString() : null;
 
-        $query = Invoice::with('customer', 'user')->where('sale_type', 'Online')->where('status', '!=', 2);
+        $query = Invoice::with(['customer', 'user', 'invoiceItems.product', 'invoiceItems.product_variation.size', 'invoiceItems.product_variation.color'])
+            ->where('sale_type', 'Online')
+            ->where('status', '!=', 2);
 
         // Show orders that have been dispatched to courier or confirmed
         if (!$request->filled('view_all')) {

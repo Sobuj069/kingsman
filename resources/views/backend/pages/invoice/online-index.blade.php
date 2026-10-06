@@ -328,21 +328,29 @@
                                         <td>{{ $data->customer->name }}</td>
                                         <td>
                                             @foreach ($inv_items as $item)
-                                                <ul>
-                                                    <li>
+                                                <div class="mb-1 d-flex align-items-center justify-content-between">
+                                                    <span>
+                                                        <strong>{{ $item->product?->name }}</strong>
+                                                        @if(!empty($item->product?->barcode))
+                                                            <span class="badge badge-light border text-dark px-1.5 py-0.5 ml-1 font-monospace" style="font-size: 11px;">
+                                                                <i class="feather icon-maximize-2 mr-0.5"></i>{{ $item->product?->barcode }}
+                                                            </span>
+                                                        @endif
                                                         @if ($data->status == 2)
-                                                            {{ $item->product?->name }} @if (env('APP_SC') == 'yes')
-                                                                ({{ $item->product_variation?->size?->size }}-{{ $item->product_variation?->color?->color }})
+                                                            @if (env('APP_SC') == 'yes' && $item->product_variation)
+                                                                <span class="badge badge-info px-1 py-0.5 ml-1" style="font-size: 10px;">{{ $item->product_variation?->size?->size }}-{{ $item->product_variation?->color?->color }}</span>
                                                             @endif
                                                         @else
-                                                            {{ $item->product?->name }} @if ($item->is_return == 1)
-                                                                <span class="badge bg-danger">Return</span>
-                                                                @endif @if (env('APP_SC') == 'yes')
-                                                                    ({{ $item->product_variation?->size?->size }}-{{ $item->product_variation?->color?->color }})
-                                                                @endif
+                                                            @if ($item->is_return == 1)
+                                                                <span class="badge bg-danger ml-1">Return</span>
                                                             @endif
-                                                    </li>
-                                                </ul>
+                                                            @if (env('APP_SC') == 'yes' && $item->product_variation)
+                                                                <span class="badge badge-info px-1 py-0.5 ml-1" style="font-size: 10px;">{{ $item->product_variation?->size?->size }}-{{ $item->product_variation?->color?->color }}</span>
+                                                            @endif
+                                                        @endif
+                                                    </span>
+                                                    <span class="badge badge-secondary ml-2 font-weight-bold">× {{ (int)$item->main_qty }}</span>
+                                                </div>
                                             @endforeach
                                         </td>
                                         <td>{{ $data->total_amount }}</td>
@@ -599,7 +607,10 @@
                                                                                 </div>
                                                                                 <div class="col-7  text-left">
                                                                                     <strong style="font-size:13px">
-                                                                                        {{ $item->product->name }}
+                                                                                        {{ $item->product?->name }}
+                                                                                        @if(!empty($item->product?->barcode))
+                                                                                            <span style="font-size: 11px; font-weight: normal; color: #555;"> [{{ $item->product?->barcode }}]</span>
+                                                                                        @endif
                                                                                     </strong>
                                                                                 </div>
                                                                                 <div class="col-3 text-right">
@@ -928,6 +939,11 @@
                                                                   <td>{{ $loop->iteration }}</td>
                                                                   <td>
                                                                       <strong>{{ $m_item->product?->name }}</strong>
+                                                                      @if(!empty($m_item->product?->barcode))
+                                                                          <span class="badge badge-light border text-dark px-1.5 py-0.5 ml-1 font-monospace" style="font-size: 11px;">
+                                                                              <i class="feather icon-maximize-2 mr-0.5"></i>{{ $m_item->product?->barcode }}
+                                                                          </span>
+                                                                      @endif
                                                                        @if ($m_item->suppliers->isNotEmpty())
                                                                            <span class="badge badge-secondary ml-1">{{ $m_item->suppliers->pluck('name')->implode(', ') }}</span>
                                                                        @endif
@@ -1075,7 +1091,10 @@
                                                 </div>
                                                 <div class="col-7  text-left">
                                                     <strong style="font-size:13px">
-                                                        {{ $item->product->name }}
+                                                        {{ $item->product?->name }}
+                                                        @if(!empty($item->product?->barcode))
+                                                            <span style="font-size: 11px; font-weight: normal; color: #555;"> [{{ $item->product?->barcode }}]</span>
+                                                        @endif
                                                         @if (env('APP_IMEI') == 'yes' && !empty($item->imei))
                                                             <br>
                                                             IMEI: {{ str_replace(',', ', ', $item->imei) }}

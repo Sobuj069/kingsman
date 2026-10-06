@@ -117,8 +117,13 @@
                                         <ul class="mb-0 pl-3" style="font-size:12px;">
                                             @foreach ($order->items as $item)
                                                 <li>
-                                                    {{ $item->product?->name ?? 'Product' }}
-                                                    <span class="badge badge-secondary">x{{ $item->quantity }}</span>
+                                                    <strong>{{ $item->product?->name ?? 'Product' }}</strong>
+                                                    @if(!empty($item->product?->barcode))
+                                                        <span class="badge badge-light border text-dark px-1.5 py-0.5 ml-1 font-monospace" style="font-size: 11px;">
+                                                            <i class="feather icon-maximize-2 mr-0.5"></i>{{ $item->product?->barcode }}
+                                                        </span>
+                                                    @endif
+                                                    <span class="badge badge-secondary ml-1">x{{ $item->quantity }}</span>
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -304,6 +309,11 @@
                                     <td>{{ $i + 1 }}</td>
                                     <td class="text-left">
                                         <strong>{{ $item->product?->name ?? __('Deleted Product') }}</strong>
+                                        @if(!empty($item->product?->barcode))
+                                            <span class="badge badge-light border text-dark px-1.5 py-0.5 ml-1 font-monospace" style="font-size: 11px;">
+                                                <i class="feather icon-maximize-2 mr-0.5"></i>{{ $item->product?->barcode }}
+                                            </span>
+                                        @endif
                                         @if($item->product?->code)
                                             <br><small class="text-muted">{{ $item->product->code }}</small>
                                         @endif

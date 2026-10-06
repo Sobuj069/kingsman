@@ -239,6 +239,11 @@
                                             <div class="mb-1 d-flex align-items-center justify-content-between">
                                                 <span>
                                                     <strong>{{ $item->product?->name }}</strong>
+                                                    @if(!empty($item->product?->barcode))
+                                                        <span class="badge badge-light border text-dark px-1.5 py-0.5 ml-1 font-monospace" style="font-size: 11px;">
+                                                            <i class="feather icon-maximize-2 mr-0.5"></i>{{ $item->product?->barcode }}
+                                                        </span>
+                                                    @endif
                                                     @if ($item->product_variation)
                                                         <span class="badge badge-info px-1.5 py-0.5 ml-1" style="font-size: 10px;">
                                                             {{ $item->product_variation->size?->size }} / {{ $item->product_variation->color?->color }}
@@ -456,7 +461,14 @@
                             <tbody>
                                 @foreach ($invItems as $item)
                                     <tr>
-                                        <td><strong>{{ $item->product?->name }}</strong></td>
+                                        <td>
+                                            <strong>{{ $item->product?->name }}</strong>
+                                            @if(!empty($item->product?->barcode))
+                                                <span class="badge badge-light border text-dark px-1.5 py-0.5 ml-1 font-monospace" style="font-size: 11px;">
+                                                    <i class="feather icon-maximize-2 mr-0.5"></i>{{ $item->product?->barcode }}
+                                                </span>
+                                            @endif
+                                        </td>
                                         <td>
                                             @if ($item->product_variation)
                                                 <span class="badge badge-info">{{ $item->product_variation->size?->size }}</span>

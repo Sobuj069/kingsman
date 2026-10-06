@@ -472,7 +472,7 @@
                                         <tr class="text-center border_item">
                                             <td>{{ ++$key }}</td>
                                             <td style="text-align: left; padding-left: 5px;">
-                                                <p style="margin: 0;">{{ $item->product?->name }}</p>
+                                                <p style="margin: 0;">{{ $item->product?->name }} @if(!empty($item->product?->barcode)) <small class="text-muted">[{{ $item->product?->barcode }}]</small> @endif</p>
                                             </td>
                                             <td>{{ $item->product_discount }} </td>
                                             <td>{{ $item->rate }} </td>

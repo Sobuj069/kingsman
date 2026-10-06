@@ -254,6 +254,11 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <strong>{{ $item->product?->name }}</strong>
+                                            @if(!empty($item->product?->barcode))
+                                                <span class="badge badge-light border text-dark px-1.5 py-0.5 ml-1 font-monospace" style="font-size: 11px;">
+                                                    <i class="feather icon-maximize-2 mr-0.5"></i>{{ $item->product?->barcode }}
+                                                </span>
+                                            @endif
                                             @if ($item->suppliers->isNotEmpty())
                                                 <span class="badge badge-secondary ml-1">{{ $item->suppliers->pluck('name')->implode(', ') }}</span>
                                             @endif
