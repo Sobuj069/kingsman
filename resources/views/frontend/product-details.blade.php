@@ -273,6 +273,21 @@
                                   x-text="Math.round(((currentOldPrice - currentPrice) / currentOldPrice) * 100) + '% Off'"></span>
                         </template>
                     </div>
+
+                    <!-- Product Details / Description -->
+                    @if(!empty($product['description']))
+                        @php
+                            $rawDesc = $product['description'];
+                            $hasHtml = strip_tags($rawDesc) !== $rawDesc || preg_match('/<[a-z][\s\S]*>/i', $rawDesc);
+                        @endphp
+                        <div class="product-description-content text-[13px] md:text-sm text-gray-700 leading-relaxed pt-3 border-t border-gray-100 mt-2">
+                            @if($hasHtml)
+                                {!! $rawDesc !!}
+                            @else
+                                {!! nl2br(e($rawDesc)) !!}
+                            @endif
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Color Selection Module (Only if colors configured) -->
@@ -522,34 +537,7 @@
 
                 <!-- Collapsible Editorial Accordions -->
                 <div class="flex flex-col gap-2">
-                    <!-- Accordion 1: Product Description & Details -->
-                    <div class="bg-[#F5F5F7] p-4 border border-gray-200/60">
-                        <button type="button" 
-                                @click="accordion1 = !accordion1"
-                                class="w-full flex items-center justify-between text-xs font-bold uppercase text-black text-left tracking-wider">
-                            <span>Product Details & Specifications</span>
-                            <span class="material-symbols-outlined text-base transition-transform duration-300" :class="accordion1 ? 'rotate-180' : ''">expand_more</span>
-                        </button>
-                        <div x-show="accordion1" x-collapse class="pt-3 leading-relaxed border-t border-gray-200/60 mt-3">
-                            @if(!empty($product['description']))
-                                @php
-                                    $rawDesc = $product['description'];
-                                    $hasHtml = strip_tags($rawDesc) !== $rawDesc || preg_match('/<[a-z][\s\S]*>/i', $rawDesc);
-                                @endphp
-                                <div class="product-description-content">
-                                    @if($hasHtml)
-                                        {!! $rawDesc !!}
-                                    @else
-                                        {!! nl2br(e($rawDesc)) !!}
-                                    @endif
-                                </div>
-                            @else
-                                <p class="text-xs text-gray-500 italic">Authentic {{ $product['name'] }} crafted with premium fabrics and superior finishing.</p>
-                            @endif
-                        </div>
-                    </div>
-
-                    <!-- Accordion 2: Delivery Information -->
+                    <!-- Accordion: Delivery & Exchange Information -->
                     <div class="bg-[#F5F5F7] p-4 border border-gray-200/60">
                         <button type="button" 
                                 @click="accordion2 = !accordion2"
