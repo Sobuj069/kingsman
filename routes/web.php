@@ -172,6 +172,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     // --------------------> Web Order System (Incoming Website Orders) <--------------------
     Route::controller(WebOrderController::class)->group(function () {
         Route::get('/web-orders', 'index')->name('web-orders.index');
+        Route::post('/web-orders/update/{id}', 'update')->name('web-orders.update');
         Route::post('/web-orders/send-to-courier/{id}', 'sendToCourier')->name('web-orders.send-to-courier');
         Route::post('/web-orders/bulk-courier', 'bulkSendToCourier')->name('web-orders.bulk-courier');
         Route::post('/web-orders/cancel/{id}', 'cancel')->name('web-orders.cancel');

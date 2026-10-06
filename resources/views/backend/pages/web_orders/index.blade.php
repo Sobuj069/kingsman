@@ -196,9 +196,10 @@
                                 <th> Delivery Address </th>
                                 <th> Ordered Items </th>
                                 <th> Total (TK) </th>
+                                <th> Advance (TK) </th>
                                 <th> COD Due (TK) </th>
                                 <th> Status </th>
-                                <th class="header_style_right" style="width: 130px;"> Action </th>
+                                <th class="header_style_right" style="width: 170px;"> Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -261,9 +262,17 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if($order->total_paid > 0)
+                                            <strong class="text-success font-weight-bold">TK {{ number_format($order->total_paid, 2) }}</strong>
+                                            <div class="badge badge-success text-white font-weight-bold small mt-1">Advance</div>
+                                        @else
+                                            <span class="text-muted small">TK 0.00</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         @if($order->total_due > 0)
                                             <strong class="text-danger">TK {{ number_format($order->total_due, 2) }}</strong>
-                                            <div class="badge badge-warning text-dark font-weight-bold small">COD</div>
+                                            <div class="badge badge-warning text-dark font-weight-bold small mt-1">COD Due</div>
                                         @else
                                             <span class="badge badge-success text-white font-weight-bold">PAID</span>
                                         @endif
@@ -280,6 +289,13 @@
                                                     data-toggle="modal" data-target="#courierModal-{{ $order->id }}"
                                                     title="{{ __('Send to Courier') }}" style="padding: 4px 8px; border-radius: 6px;">
                                                 <i class="feather icon-truck"></i> {{ __('Dispatch') }}
+                                            </button>
+
+                                            <!-- Edit Order & Advance Modal Trigger -->
+                                            <button type="button" class="btn btn-warning btn-sm font-weight-bold" 
+                                                    data-toggle="modal" data-target="#editOrderModal-{{ $order->id }}"
+                                                    title="{{ __('Edit Order & Advance') }}" style="padding: 4px 8px; border-radius: 6px; background-color: #f59e0b; border-color: #d97706; color: #fff;">
+                                                <i class="feather icon-edit"></i> {{ __('Edit') }}
                                             </button>
 
                                             <!-- View Details Modal Trigger -->
@@ -304,7 +320,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="11" class="text-center py-5">
+                                    <td colspan="12" class="text-center py-5">
                                         <div class="text-muted">
                                             <i class="feather icon-check-circle text-success" style="font-size: 40px;"></i>
                                             <h6 class="mt-3 font-weight-bold">{{ __('No Pending Web Orders Found') }}</h6>
@@ -442,6 +458,14 @@
                                     <span>{{ __('Grand Total') }}:</span>
                                     <span class="text-primary">TK {{ number_format($order->total_amount, 2) }}</span>
                                 </div>
+                                <div class="d-flex justify-content-between font-weight-bold text-success mt-1">
+                                    <span>{{ __('Advance Paid') }}:</span>
+                                    <span>TK {{ number_format($order->total_paid, 2) }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between font-weight-bold text-danger">
+                                    <span>{{ __('Remaining COD Due') }}:</span>
+                                    <span>TK {{ number_format($order->total_due, 2) }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -488,10 +512,163 @@
                 </div>
                 <div class="modal-footer bg-light py-2">
                     <button type="button" class="btn btn-secondary font-weight-bold" data-dismiss="modal">{{ __('Close') }}</button>
+                    <button type="button" class="btn btn-warning font-weight-bold" data-dismiss="modal" data-toggle="modal" data-target="#editOrderModal-{{ $order->id }}">
+                        <i class="feather icon-edit mr-1"></i> {{ __('Edit Order / Advance') }}
+                    </button>
                     <button type="button" class="btn btn-success font-weight-bold" data-dismiss="modal" data-toggle="modal" data-target="#courierModal-{{ $order->id }}">
                         <i class="feather icon-truck mr-1"></i> {{ __('Dispatch to Courier') }}
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT WEB ORDER & ADVANCE PAYMENT MODAL -->
+    <div class="modal fade" id="editOrderModal-{{ $order->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content text-left" style="border-radius: 12px; overflow: hidden;">
+                <div class="modal-header text-white py-3" style="background-color: #f59e0b;">
+                    <h5 class="modal-title font-weight-bold text-white d-flex align-items-center">
+                        <i class="feather icon-edit mr-2"></i> {{ __('Edit Web Order & Advance Payment') }} ({{ $order->invoice_no }})
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('web-orders.update', $order->id) }}" method="POST" id="editOrderForm-{{ $order->id }}">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <!-- Customer Information Section -->
+                        <h6 class="font-weight-bold text-dark mb-3 d-flex align-items-center">
+                            <i class="feather icon-user text-primary mr-2"></i> {{ __('Customer & Shipping Details') }}
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold text-dark small mb-1">{{ __('Recipient Name') }} <span class="text-danger">*</span></label>
+                                <input type="text" name="customer_name" class="form-control" value="{{ $order->customer?->name ?? 'Customer' }}" required style="height: 40px;">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold text-dark small mb-1">{{ __('11-Digit Phone Number') }} <span class="text-danger">*</span></label>
+                                <input type="text" name="customer_phone" class="form-control font-weight-bold text-primary" value="{{ $order->customer?->phone }}" required style="height: 40px;">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="font-weight-bold text-dark small mb-1">{{ __('Full Delivery Address') }} <span class="text-danger">*</span></label>
+                                <textarea name="customer_address" class="form-control" rows="2" required>{{ $cleanAddress }}</textarea>
+                            </div>
+                        </div>
+
+                        <hr class="my-3">
+
+                        <!-- Ordered Items Section -->
+                        <h6 class="font-weight-bold text-dark mb-2 d-flex align-items-center">
+                            <i class="feather icon-package text-primary mr-2"></i> {{ __('Ordered Products & Quantities') }}
+                        </h6>
+                        <div class="table-responsive mb-3">
+                            <table class="table table-bordered table-sm text-center align-middle" id="editItemsTable-{{ $order->id }}">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="text-left">{{ __('Product & Variation') }}</th>
+                                        <th style="width: 100px;">{{ __('Qty') }}</th>
+                                        <th style="width: 130px;">{{ __('Unit Rate (TK)') }}</th>
+                                        <th style="width: 130px;" class="text-right">{{ __('Subtotal (TK)') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($invItems as $item)
+                                        <tr data-item-id="{{ $item->id }}">
+                                            <td class="text-left">
+                                                <strong>{{ $item->product?->name }}</strong>
+                                                @if(!empty($item->product?->barcode))
+                                                    <span class="badge badge-light border text-dark px-1.5 py-0.5 ml-1 font-monospace" style="font-size: 11px;">
+                                                        <i class="feather icon-maximize-2 mr-0.5"></i>{{ $item->product?->barcode }}
+                                                    </span>
+                                                @endif
+                                                @if ($item->product_variation)
+                                                    <div class="small text-muted mt-0.5">
+                                                        {{ $item->product_variation->size?->size }} / {{ $item->product_variation->color?->color }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <input type="number" min="1" name="items[{{ $item->id }}][main_qty]" 
+                                                       class="form-control form-control-sm text-center font-weight-bold edit-item-qty" 
+                                                       value="{{ (int)$item->main_qty }}" required>
+                                            </td>
+                                            <td>
+                                                <input type="number" step="0.01" min="0" name="items[{{ $item->id }}][rate]" 
+                                                       class="form-control form-control-sm text-right font-weight-bold edit-item-rate" 
+                                                       value="{{ (float)$item->rate }}" required>
+                                            </td>
+                                            <td class="text-right font-weight-bold align-middle edit-item-subtotal">
+                                                TK {{ number_format($item->subtotal, 2) }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr class="my-3">
+
+                        <!-- Financials & Advance Payment Calculation Section -->
+                        <h6 class="font-weight-bold text-dark mb-3 d-flex align-items-center">
+                            <i class="feather icon-credit-card text-primary mr-2"></i> {{ __('Order Pricing & Advance Payment') }}
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="font-weight-bold text-dark small mb-1">{{ __('Delivery Charge (TK)') }}</label>
+                                <input type="number" step="0.01" min="0" name="delivery_charge" 
+                                       class="form-control font-weight-bold edit-delivery-charge" 
+                                       value="{{ (float)$order->delivery_charge }}" style="height: 40px;">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="font-weight-bold text-dark small mb-1">{{ __('Discount / Coupon (TK)') }}</label>
+                                <input type="number" step="0.01" min="0" name="discount_amount" 
+                                       class="form-control font-weight-bold text-success edit-discount-amount" 
+                                       value="{{ (float)$order->discount_amount }}" style="height: 40px;">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="font-weight-bold text-dark small mb-1">{{ __('Grand Total (TK)') }}</label>
+                                <div class="form-control font-weight-bold bg-light d-flex align-items-center justify-content-end text-primary edit-grand-total" style="height: 40px; font-size: 15px;">
+                                    TK {{ number_format($order->total_amount, 2) }}
+                                </div>
+                            </div>
+
+                            <!-- ADVANCE PAYMENT -->
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold text-success small mb-1">
+                                    <i class="feather icon-check-circle mr-1"></i> {{ __('Advance Paid Amount (TK)') }}
+                                </label>
+                                <input type="number" step="0.01" min="0" name="total_paid" 
+                                       class="form-control font-weight-bold text-success edit-total-paid" 
+                                       value="{{ (float)$order->total_paid }}" placeholder="0.00" style="height: 42px; font-size: 16px; border: 2px solid #86efac;">
+                                <small class="text-muted">{{ __('গ্রাহক অগ্রিম টাকা পরিশোধ করলে এখানে বসান।') }}</small>
+                            </div>
+
+                            <!-- REMAINING COD DUE -->
+                            <div class="col-md-6 mb-3">
+                                <label class="font-weight-bold text-danger small mb-1">
+                                    <i class="feather icon-alert-circle mr-1"></i> {{ __('Remaining COD Due (TK)') }}
+                                </label>
+                                <div class="form-control font-weight-bold bg-light d-flex align-items-center justify-content-end text-danger edit-remaining-due" style="height: 42px; font-size: 16px; border: 2px solid #fca5a5;">
+                                    TK {{ number_format($order->total_due, 2) }}
+                                </div>
+                                <small class="text-muted">{{ __('কুরিয়ারে ডেলিভারির সময় এই টাকা কালেক্ট হবে।') }}</small>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <label class="font-weight-bold text-dark small mb-1">{{ __('Order Notes / Instructions') }}</label>
+                                <input type="text" name="note" class="form-control" value="{{ $order->note }}" placeholder="{{ __('Add order instructions or notes') }}" style="height: 40px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light py-2">
+                        <button type="button" class="btn btn-secondary font-weight-bold" data-dismiss="modal">{{ __('Cancel') }}</button>
+                        <button type="submit" class="btn btn-success font-weight-bold px-4">
+                            <i class="feather icon-check-circle mr-1"></i> {{ __('Save & Update Order') }}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -565,6 +742,29 @@
             });
             $('#bulkOrderIds').val(JSON.stringify(ids));
             $('#bulkCourierModal').modal('show');
+        });
+
+        // Dynamic Calculation in Web Order Edit Modal
+        $(document).on('input', '.edit-item-qty, .edit-item-rate, .edit-delivery-charge, .edit-discount-amount, .edit-total-paid', function() {
+            var modal = $(this).closest('.modal');
+            var itemsSubtotal = 0;
+
+            modal.find('tbody tr').each(function() {
+                var qty = parseFloat($(this).find('.edit-item-qty').val()) || 0;
+                var rate = parseFloat($(this).find('.edit-item-rate').val()) || 0;
+                var lineSub = qty * rate;
+                $(this).find('.edit-item-subtotal').text('TK ' + lineSub.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+                itemsSubtotal += lineSub;
+            });
+
+            var delivery = parseFloat(modal.find('.edit-delivery-charge').val()) || 0;
+            var discount = parseFloat(modal.find('.edit-discount-amount').val()) || 0;
+            var grandTotal = Math.max(0, itemsSubtotal + delivery - discount);
+            var advancePaid = parseFloat(modal.find('.edit-total-paid').val()) || 0;
+            var remainingDue = Math.max(0, grandTotal - advancePaid);
+
+            modal.find('.edit-grand-total').text('TK ' + grandTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            modal.find('.edit-remaining-due').text('TK ' + remainingDue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
         });
     });
 </script>

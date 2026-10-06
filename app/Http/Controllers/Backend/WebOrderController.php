@@ -95,6 +95,102 @@ class WebOrderController extends Controller
     }
 
     /**
+     * Update web order details, items, amounts, and advance payments.
+     */
+    public function update(Request $request, $id)
+    {
+        $invoice = Invoice::with(['customer', 'invoiceItems.product'])->findOrFail($id);
+
+        $request->validate([
+            'customer_name'    => 'required|string|max:150',
+            'customer_phone'   => 'required|string|max:20',
+            'customer_address' => 'required|string|max:500',
+            'delivery_charge'  => 'nullable|numeric|min:0',
+            'discount_amount'  => 'nullable|numeric|min:0',
+            'total_paid'       => 'nullable|numeric|min:0',
+            'note'             => 'nullable|string|max:500',
+            'items'            => 'nullable|array',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            // 1. Update Customer information
+            if ($invoice->customer) {
+                $invoice->customer->update([
+                    'name'    => trim($request->input('customer_name')),
+                    'phone'   => preg_replace('/[^0-9]/', '', $request->input('customer_phone')),
+                    'address' => trim($request->input('customer_address')),
+                ]);
+            }
+
+            // 2. Update line items if provided
+            if ($request->has('items') && is_array($request->items)) {
+                foreach ($request->items as $itemId => $itemData) {
+                    $invItem = InvoiceItem::where('id', $itemId)->where('invoice_id', $invoice->id)->first();
+                    if ($invItem) {
+                        $newQty = max(1, (float)($itemData['main_qty'] ?? $invItem->main_qty));
+                        $newRate = max(0, (float)($itemData['rate'] ?? $invItem->rate));
+                        $oldQty = (float)$invItem->main_qty;
+
+                        // Stock adjustment if qty modified
+                        if ($newQty != $oldQty && $invItem->product && $invItem->product->is_service != 1) {
+                            $diff = $newQty - $oldQty;
+                            if ($diff > 0) {
+                                // Deduct added stock
+                                $invItem->product->decrement('main_qty', $diff);
+                            } else {
+                                // Restore stock
+                                $restoreAmount = abs($diff);
+                                if (function_exists('restoreToFIFO')) {
+                                    restoreToFIFO($invItem->product_id, $restoreAmount, $invItem->product_variation_id, 1);
+                                }
+                                $invItem->product->increment('main_qty', $restoreAmount);
+                            }
+                        }
+
+                        $invItem->main_qty = $newQty;
+                        $invItem->rate = $newRate;
+                        $invItem->subtotal = $newQty * $newRate;
+                        $invItem->save();
+                    }
+                }
+            }
+
+            // 3. Recalculate totals and advance / COD due
+            $itemsSubtotal = (float)$invoice->invoiceItems()->sum('subtotal');
+            $deliveryCharge = (float)$request->input('delivery_charge', 0);
+            $discountAmount = (float)$request->input('discount_amount', 0);
+            $totalAmount = max(0, $itemsSubtotal + $deliveryCharge - $discountAmount);
+            $totalPaid = (float)$request->input('total_paid', 0);
+            $totalDue = max(0, $totalAmount - $totalPaid);
+
+            $invoice->delivery_charge = $deliveryCharge;
+            $invoice->discount_amount = $discountAmount;
+            $invoice->estimated_amount = $totalAmount;
+            $invoice->total_amount = $totalAmount;
+            $invoice->total_paid = $totalPaid;
+            $invoice->total_due = $totalDue;
+            if ($request->has('note')) {
+                $invoice->note = $request->input('note');
+            }
+            $invoice->save();
+
+            DB::commit();
+            session()->flash('success', __("Web Order :inv successfully updated! Advance Paid: TK :paid | Remaining COD Due: TK :due", [
+                'inv'  => $invoice->invoice_no,
+                'paid' => number_format($totalPaid, 2),
+                'due'  => number_format($totalDue, 2),
+            ]));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Web Order Update Error: ' . $e->getMessage());
+            session()->flash('error', __('Failed to update web order: ') . $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
+    /**
      * Dispatch single web order to Courier and transition to Online Sale List.
      */
     public function sendToCourier(Request $request, $id)
