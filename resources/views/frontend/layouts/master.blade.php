@@ -356,10 +356,26 @@
 
                     // Strict Stock Validation: Disallow adding out-of-stock items
                     let stock = (p && p.stock !== undefined && p.stock !== null) ? Number(p.stock) : null;
-                    if (p && p.variation_stocks && p.variation_stocks[itemColor] && p.variation_stocks[itemColor][itemSize] !== undefined) {
-                        stock = Number(p.variation_stocks[itemColor][itemSize]);
-                    } else if (p && p.size_stocks && p.size_stocks[itemSize] !== undefined) {
-                        stock = Number(p.size_stocks[itemSize]);
+                    if (p && p.variation_stocks && p.variation_stocks[itemColor]) {
+                        if (p.variation_stocks[itemColor][itemSize] !== undefined) {
+                            stock = Number(p.variation_stocks[itemColor][itemSize]);
+                        } else if (itemSize === 'Default' || itemSize === 'N/A') {
+                            if (p.variation_stocks[itemColor]['Default'] !== undefined) {
+                                stock = Number(p.variation_stocks[itemColor]['Default']);
+                            } else if (p.variation_stocks[itemColor]['N/A'] !== undefined) {
+                                stock = Number(p.variation_stocks[itemColor]['N/A']);
+                            }
+                        }
+                    } else if (p && p.size_stocks) {
+                        if (p.size_stocks[itemSize] !== undefined) {
+                            stock = Number(p.size_stocks[itemSize]);
+                        } else if (itemSize === 'Default' || itemSize === 'N/A') {
+                            if (p.size_stocks['Default'] !== undefined) {
+                                stock = Number(p.size_stocks['Default']);
+                            } else if (p.size_stocks['N/A'] !== undefined) {
+                                stock = Number(p.size_stocks['N/A']);
+                            }
+                        }
                     }
                     const inStock = (p && p.in_stock === false) ? false : (stock !== null ? stock > 0 : true);
 
@@ -715,7 +731,8 @@
                 },
 
                 openQuickView(product) {
-                    const sizes = product.sizes || ['M', 'L', 'XL', 'XXL'];
+                    const hasSizes = Array.isArray(product.sizes) && product.sizes.length > 0;
+                    const sizes = hasSizes ? product.sizes : [];
                     const isProductInStock = product.in_stock !== false;
                     const stockVal = isProductInStock && (product.stock !== undefined && product.stock !== null) ? Math.max(0, Number(product.stock)) : (isProductInStock ? 10 : 0);
                     const inStock = isProductInStock && (product.stock !== undefined && product.stock !== null ? Number(product.stock) > 0 : true);
@@ -736,8 +753,8 @@
                     }
 
                     // Choose first in-stock size
-                    let selSize = sizes[0] || 'M';
-                    if (sizeStocks && sizeStocks[selSize] !== undefined && Number(sizeStocks[selSize]) <= 0) {
+                    let selSize = hasSizes ? sizes[0] : 'Default';
+                    if (hasSizes && sizeStocks && sizeStocks[selSize] !== undefined && Number(sizeStocks[selSize]) <= 0) {
                         for (let sz of sizes) {
                             if (Number(sizeStocks[sz]) > 0) {
                                 selSize = sz;
@@ -817,9 +834,16 @@
 
                 getQuickSizeStock(sz) {
                     if (!this.quickProduct || this.quickProduct.in_stock === false) return 0;
-                    const c = this.quickProduct.selectedColor;
-                    if (this.quickProduct.variation_stocks && c && this.quickProduct.variation_stocks[c] && this.quickProduct.variation_stocks[c][sz] !== undefined) {
-                        return Number(this.quickProduct.variation_stocks[c][sz]);
+                    const c = typeof this.quickProduct.selectedColor === 'object' ? this.quickProduct.selectedColor.name : this.quickProduct.selectedColor;
+                    if (this.quickProduct.variation_stocks && c && this.quickProduct.variation_stocks[c]) {
+                        if (this.quickProduct.variation_stocks[c][sz] !== undefined) {
+                            return Number(this.quickProduct.variation_stocks[c][sz]);
+                        }
+                        if (sz === 'Default' || sz === 'N/A') {
+                            if (this.quickProduct.variation_stocks[c]['Default'] !== undefined) return Number(this.quickProduct.variation_stocks[c]['Default']);
+                            if (this.quickProduct.variation_stocks[c]['N/A'] !== undefined) return Number(this.quickProduct.variation_stocks[c]['N/A']);
+                            return Object.values(this.quickProduct.variation_stocks[c]).reduce((acc, v) => acc + (Number(v) || 0), 0);
+                        }
                     }
                     if (this.quickProduct.size_stocks && this.quickProduct.size_stocks[sz] !== undefined) {
                         return Number(this.quickProduct.size_stocks[sz]);
@@ -882,11 +906,33 @@
                         return;
                     }
 
-                    const sizes = product.sizes || ['38 (S)', '40 (M)', '42 (L)', '44 (XL)', '46 (XXL)'];
-                    let chosenSize = '42 (L)';
-                    const chosenColor = (product.colors && product.colors[0] && typeof product.colors[0] === 'object' ? product.colors[0].name : product.colors?.[0]) || 'Default';
+                    const hasSizes = Array.isArray(product.sizes) && product.sizes.length > 0;
+                    const sizes = hasSizes ? product.sizes : [];
+                    let chosenSize = hasSizes ? sizes[0] : 'Default';
+                    let chosenColor = (product.colors && product.colors[0] && typeof product.colors[0] === 'object' ? product.colors[0].name : product.colors?.[0]) || 'Default';
                     
-                    if (product.variation_stocks && product.variation_stocks[chosenColor]) {
+                    if (!hasSizes) {
+                        if (product.variation_stocks && Object.keys(product.variation_stocks).length > 0) {
+                            const colorStock = product.variation_stocks[chosenColor];
+                            const chosenHasStock = colorStock && (Number(colorStock['Default'] || colorStock['N/A'] || 0) > 0);
+                            if (!chosenHasStock) {
+                                let foundCol = null;
+                                for (let colKey of Object.keys(product.variation_stocks)) {
+                                    const sumC = Object.values(product.variation_stocks[colKey]).reduce((a, b) => a + (Number(b) || 0), 0);
+                                    if (sumC > 0) {
+                                        foundCol = colKey;
+                                        break;
+                                    }
+                                }
+                                if (foundCol) {
+                                    chosenColor = foundCol;
+                                } else {
+                                    window.showRobeToast(`"${product.name || 'This item'}" is currently out of stock.`);
+                                    return;
+                                }
+                            }
+                        }
+                    } else if (product.variation_stocks && product.variation_stocks[chosenColor]) {
                         let found = null;
                         for (let sz of sizes) {
                             if (Number(product.variation_stocks[chosenColor][sz]) > 0) {
@@ -912,8 +958,6 @@
                             return;
                         }
                         chosenSize = found;
-                    } else if (sizes.length > 0) {
-                        chosenSize = sizes[0];
                     }
 
                     const added = Alpine.store('cart').addItem(product, 1, chosenSize, chosenColor);

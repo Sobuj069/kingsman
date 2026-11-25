@@ -229,13 +229,16 @@ class FrontendController extends Controller
 
         $cleanSize = $itemSize ? trim($itemSize) : '';
         $cleanColor = $itemColor ? trim($itemColor) : '';
+        $genericValues = ['', 'default', 'n/a', 'standard', 'none'];
+        $isSizeGeneric = in_array(strtolower($cleanSize), $genericValues, true);
+        $isColorGeneric = in_array(strtolower($cleanColor), $genericValues, true);
 
         // 1. Exact match on both size and color
-        $exactBoth = $product->product_variations->filter(function ($v) use ($cleanSize, $cleanColor) {
+        $exactBoth = $product->product_variations->filter(function ($v) use ($cleanSize, $cleanColor, $isSizeGeneric, $isColorGeneric) {
             $s = trim($v->size?->size ?? '');
             $c = trim($v->color?->color ?? '');
-            $sOk = empty($cleanSize) || strcasecmp($s, $cleanSize) === 0;
-            $cOk = empty($cleanColor) || strcasecmp($c, $cleanColor) === 0;
+            $sOk = $isSizeGeneric ? empty($s) : (strcasecmp($s, $cleanSize) === 0);
+            $cOk = $isColorGeneric ? true : (strcasecmp($c, $cleanColor) === 0);
             return $sOk && $cOk;
         });
 
@@ -249,8 +252,25 @@ class FrontendController extends Controller
             return $exactBoth->first();
         }
 
-        // 2. Exact match on size
-        if (!empty($cleanSize)) {
+        // 2. Exact match on color (for color-only variations or fallback when size omitted/unmatched)
+        if (!$isColorGeneric) {
+            $colorMatches = $product->product_variations->filter(function ($v) use ($cleanColor) {
+                return strcasecmp(trim($v->color?->color ?? ''), $cleanColor) === 0;
+            });
+
+            if ($colorMatches->isNotEmpty()) {
+                foreach ($colorMatches as $cm) {
+                    $stk = (float) PurchaseItem::where('product_variation_id', $cm->id)->sum('stock_qty');
+                    if ($stk > 0) {
+                        return $cm;
+                    }
+                }
+                return $colorMatches->first();
+            }
+        }
+
+        // 3. Exact match on size
+        if (!$isSizeGeneric) {
             $sizeMatches = $product->product_variations->filter(function ($v) use ($cleanSize) {
                 return strcasecmp(trim($v->size?->size ?? ''), $cleanSize) === 0;
             });
@@ -266,8 +286,8 @@ class FrontendController extends Controller
             }
         }
 
-        // 3. Fallback: normalized alphanumeric match
-        if (!empty($cleanSize)) {
+        // 4. Fallback: normalized alphanumeric match on size
+        if (!$isSizeGeneric) {
             $normSize = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $cleanSize));
             $candidates = $product->product_variations->filter(function ($v) use ($normSize) {
                 $sNorm = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $v->size?->size ?? ''));
@@ -282,6 +302,14 @@ class FrontendController extends Controller
                     }
                 }
                 return $candidates->first();
+            }
+        }
+
+        // 5. Final fallback: first in-stock variation, else first variation
+        foreach ($product->product_variations as $v) {
+            $stk = (float) PurchaseItem::where('product_variation_id', $v->id)->sum('stock_qty');
+            if ($stk > 0) {
+                return $v;
             }
         }
 
@@ -367,8 +395,8 @@ class FrontendController extends Controller
 
                     if ($dbProduct->product_variations->isNotEmpty()) {
                         foreach ($dbProduct->product_variations as $v) {
-                            $sName = $v->size?->size ?? 'N/A';
-                            $cName = $v->color?->color ?? 'Default';
+                            $sName = !empty($v->size?->size) ? $v->size->size : 'Default';
+                            $cName = !empty($v->color?->color) ? $v->color->color : 'Default';
                             $pStock = (float) PurchaseItem::where('product_variation_id', $v->id)->sum('stock_qty');
                             
                             $totalVariationStock += $pStock;
@@ -378,7 +406,7 @@ class FrontendController extends Controller
                                 $variationPrices[$cName] = [];
                                 $variationOldPrices[$cName] = [];
                             }
-                            $variationStockMap[$cName][$sName] = (int) $pStock;
+                            $variationStockMap[$cName][$sName] = ($variationStockMap[$cName][$sName] ?? 0) + (int) $pStock;
                             
                             $sizeTotalStocks[$sName] = ($sizeTotalStocks[$sName] ?? 0) + (int) $pStock;
 
@@ -399,14 +427,28 @@ class FrontendController extends Controller
                     $directPurchasedStock = (float) PurchaseItem::where('product_id', $dbProduct->id)->sum('stock_qty');
                     $stockQty = max($totalVariationStock, $directPurchasedStock, (float)($dbProduct->main_qty ?? 0));
 
+                    if ($totalVariationStock <= 0 && $stockQty > 0) {
+                        $variationStockMap = [];
+                    }
+
                     $inStock = $stockQty > 0;
                     $stockStatus = $inStock ? "In Stock • " . (int)$stockQty . " Available" : "Out of Stock • Unavailable";
 
-                    // Default size_stocks to first active color
+                    // Default size_stocks to first active in-stock color
                     $firstColorName = !empty($colors) ? ($colors[0]['name'] ?? null) : null;
+                    $activeStockColorName = $firstColorName;
+                    if (!empty($colors) && !empty($variationStockMap)) {
+                        foreach ($colors as $colObj) {
+                            $cKey = $colObj['name'] ?? null;
+                            if ($cKey && isset($variationStockMap[$cKey]) && array_sum($variationStockMap[$cKey]) > 0) {
+                                $activeStockColorName = $cKey;
+                                break;
+                            }
+                        }
+                    }
                     $sizeStocks = [];
-                    if ($firstColorName && isset($variationStockMap[$firstColorName]) && array_sum($variationStockMap[$firstColorName]) > 0) {
-                        $sizeStocks = $variationStockMap[$firstColorName];
+                    if ($activeStockColorName && isset($variationStockMap[$activeStockColorName]) && array_sum($variationStockMap[$activeStockColorName]) > 0) {
+                        $sizeStocks = $variationStockMap[$activeStockColorName];
                         foreach ($sizes as $sName) {
                             if (!isset($sizeStocks[$sName])) {
                                 $sizeStocks[$sName] = 0;
@@ -414,6 +456,8 @@ class FrontendController extends Controller
                         }
                     } elseif (!empty($sizeTotalStocks) && array_sum($sizeTotalStocks) > 0) {
                         $sizeStocks = $sizeTotalStocks;
+                    } elseif (empty($sizes) && $stockQty > 0) {
+                        $sizeStocks = ['Default' => (int)$stockQty];
                     } else {
                         $sizeCount = count($sizes) ?: 1;
                         if ($stockQty <= 0) {
@@ -451,7 +495,7 @@ class FrontendController extends Controller
                         'size_old_prices' => !empty($sizeOldPrices) ? $sizeOldPrices : null,
                         'variation_prices' => !empty($variationPrices) ? $variationPrices : null,
                         'variation_old_prices' => !empty($variationOldPrices) ? $variationOldPrices : null,
-                        'default_size' => $sizes[0] ?? null,
+                        'default_size' => $sizes[0] ?? 'Default',
                         'description' => $dbProduct->description ?? '',
                         'has_size_guide' => (bool)($dbProduct->has_size_guide == 1 || !empty($dbProduct->size_guide_image)),
                         'size_guide_type' => $dbProduct->size_guide_type ?? 'panjabi',
@@ -618,8 +662,10 @@ class FrontendController extends Controller
         foreach ($cartItems as $cItem) {
             if (!empty($cItem['id'])) {
                 $dbP = Product::with(['product_variations.size', 'product_variations.color'])->find($cItem['id']);
+                $variationIds = $dbP ? $dbP->product_variations->pluck('id')->toArray() : [];
                 $availableProductStock = max(
                     (float) PurchaseItem::where('product_id', $dbP?->id)->sum('stock_qty'),
+                    !empty($variationIds) ? (float) PurchaseItem::whereIn('product_variation_id', $variationIds)->sum('stock_qty') : 0,
                     (float)($dbP?->main_qty ?? 0)
                 );
 
@@ -629,6 +675,9 @@ class FrontendController extends Controller
                 $reqQty = max(1, (float)($cItem['quantity'] ?? $cItem['qty'] ?? 1));
                 $itemSize = $cItem['size'] ?? null;
                 $itemColor = $cItem['color'] ?? null;
+                $variantLabel = (!empty($itemSize) && !in_array(strtolower(trim($itemSize)), ['default', 'n/a']))
+                    ? "Size: {$itemSize}"
+                    : ((!empty($itemColor) && strtolower(trim($itemColor)) !== 'default') ? "Color: {$itemColor}" : "Selected variant");
 
                 if ($dbP->product_variations->isNotEmpty()) {
                     $matchedVar = $this->matchProductVariation($dbP, $itemSize, $itemColor);
@@ -638,10 +687,10 @@ class FrontendController extends Controller
                             $varStock = $availableProductStock;
                         }
                         if ($varStock <= 0) {
-                            return back()->withInput()->with('error', "Sorry, '{$dbP->name}' (Size: {$itemSize}) is currently out of stock.");
+                            return back()->withInput()->with('error', "Sorry, '{$dbP->name}' ({$variantLabel}) is currently out of stock.");
                         }
                         if ($varStock < $reqQty) {
-                            return back()->withInput()->with('error', "Sorry, only " . (int)$varStock . " unit(s) available for '{$dbP->name}' (Size: {$itemSize}).");
+                            return back()->withInput()->with('error', "Sorry, only " . (int)$varStock . " unit(s) available for '{$dbP->name}' ({$variantLabel}).");
                         }
                     }
                 } else {
@@ -1347,8 +1396,8 @@ class FrontendController extends Controller
 
                             if ($p->product_variations->isNotEmpty()) {
                                 foreach ($p->product_variations as $v) {
-                                    $sName = $v->size?->size ?? 'N/A';
-                                    $cName = $v->color?->color ?? 'Default';
+                                    $sName = !empty($v->size?->size) ? $v->size->size : 'Default';
+                                    $cName = !empty($v->color?->color) ? $v->color->color : 'Default';
                                     $pStock = (float) PurchaseItem::where('product_variation_id', $v->id)->sum('stock_qty');
                                     $totalVarStock += $pStock;
                                     if (!isset($variationStockMap[$cName])) {
@@ -1356,7 +1405,7 @@ class FrontendController extends Controller
                                         $variationPrices[$cName] = [];
                                         $variationOldPrices[$cName] = [];
                                     }
-                                    $variationStockMap[$cName][$sName] = (int)$pStock;
+                                    $variationStockMap[$cName][$sName] = ($variationStockMap[$cName][$sName] ?? 0) + (int)$pStock;
                                     $sizeStocks[$sName] = ($sizeStocks[$sName] ?? 0) + (int)$pStock;
 
                                     $vSelling = $v->selling_price !== null ? (float)$v->selling_price : $sellingPrice;
@@ -1376,6 +1425,11 @@ class FrontendController extends Controller
                             $directPurchasedStock = (float) PurchaseItem::where('product_id', $p->id)->sum('stock_qty');
                             $stockQty = max($totalVarStock, $directPurchasedStock, (float)($p->main_qty ?? 0));
                             $inStock = $stockQty > 0;
+
+                            if ($totalVarStock <= 0 && $stockQty > 0) {
+                                $variationStockMap = [];
+                                $sizeStocks = empty($sizes) ? ['Default' => (int)$stockQty] : [];
+                            }
 
                             $items[] = [
                                 'id' => $p->id,
@@ -1449,10 +1503,15 @@ class FrontendController extends Controller
             }
 
             $product = Product::with(['product_variations.size', 'product_variations.color'])->find($productId);
+            $variationIds = $product ? $product->product_variations->pluck('id')->toArray() : [];
             $availableProductStock = max(
                 (float) PurchaseItem::where('product_id', $product?->id)->sum('stock_qty'),
+                !empty($variationIds) ? (float) PurchaseItem::whereIn('product_variation_id', $variationIds)->sum('stock_qty') : 0,
                 (float)($product?->main_qty ?? 0)
             );
+            $variantLabel = (!empty($itemSize) && !in_array(strtolower(trim($itemSize)), ['default', 'n/a']))
+                ? "Size: {$itemSize}"
+                : ((!empty($itemColor) && strtolower(trim($itemColor)) !== 'default') ? "Color: {$itemColor}" : "Selected variant");
 
             if (!$product || $product->status != 1 || $availableProductStock <= 0) {
                 $allValid = false;
@@ -1487,7 +1546,7 @@ class FrontendController extends Controller
                         'requested_qty' => $reqQty,
                         'available_stock' => 0,
                         'in_stock' => false,
-                        'error' => "Sorry, '{$product->name}' (Size: {$itemSize}) is currently out of stock."
+                        'error' => "Sorry, '{$product->name}' ({$variantLabel}) is currently out of stock."
                     ];
                 } elseif ($varStock < $reqQty) {
                     $allValid = false;
@@ -1499,7 +1558,7 @@ class FrontendController extends Controller
                         'requested_qty' => $reqQty,
                         'available_stock' => (int)$varStock,
                         'in_stock' => true,
-                        'error' => "Only " . (int)$varStock . " unit(s) available for '{$product->name}' (Size: {$itemSize})."
+                        'error' => "Only " . (int)$varStock . " unit(s) available for '{$product->name}' ({$variantLabel})."
                     ];
                 } else {
                     $validatedItems[] = [
